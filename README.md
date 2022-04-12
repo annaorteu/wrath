@@ -1,4 +1,4 @@
 # wrath
 WRATH: WRapped Analysis of Tagged Haplotypes
 
-![wrath logo](/Volumes/GoogleDrive/My Drive/phd/talks/wrath_logo/wrath_logo_snake.png)
+![wrath logo](![alt text](https://github.com/annaorteu/wrath/wrath_logo_snake.png)
