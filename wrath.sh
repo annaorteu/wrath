@@ -201,6 +201,7 @@ if [ -z ${step+x} ] || [ ! -z ${plot+x} ]; then # -z asks if ${plot+x} is empty.
 
   #plot the optput
   mkdir -p wrath_out/plots
+  mkdir -p wrath_out/SVs
   python ${DIR}/big_svs/sv_detection_and_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv  -p wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
@@ -210,10 +211,9 @@ fi
 # Detect SVs without plotting the results
 
 #if the option is given to plot it, then do
-if [ -z ${noplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ ! -z ${noplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
-  mkdir -p wrath_out/plots
   mkdir -p wrath_out/SVs
   python ${DIR}/big_svs/sv_detection.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
