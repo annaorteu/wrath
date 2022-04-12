@@ -172,7 +172,7 @@ if [ -z ${step+x} ] || [ ! -z ${matrix+x} ]; then
   mkdir -p wrath_out/matrices
   # compute the jaccard index and save it in a matrix
   echo "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize}"
-  python ${DIR}/jaccard_matrix_simplequeue.py  --threads ${threads} -w wrath_out/beds/windows_${winSize}_${chromosome}.bed -b wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz  -o wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt ${verbose} || { >&2 echo  "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize} failed" ; exit 1; }
+  python ${DIR}/big_svs/jaccard_matrix_simplequeue.py  --threads ${threads} -w wrath_out/beds/windows_${winSize}_${chromosome}.bed -b wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz  -o wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt ${verbose} || { >&2 echo  "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize} failed" ; exit 1; }
 
   #edit the output (remove a colon at the end of the line)
   echo "Editing of jacard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize}"
@@ -188,7 +188,7 @@ if [ -z ${step+x} ] || [ ! -z ${outliers+x} ]; then
 
   echo "Detecting outliers"
   mkdir -p wrath_out/outliers
-  Rscript ${DIR}/outlier_detection.R wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv || { >&2 "Detecting outliers from matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  Rscript ${DIR}/big_svs/outlier_detection.R wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv || { >&2 "Detecting outliers from matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
 
@@ -201,7 +201,7 @@ if [ -z ${step+x} ] || [ ! -z ${plot+x} ]; then # -z asks if ${plot+x} is empty.
 
   #plot the optput
   mkdir -p wrath_out/plots
-  python ${DIR}/sv_detection_and_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv  -p wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  python ${DIR}/big_svs/sv_detection_and_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv  -p wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
 
@@ -215,6 +215,6 @@ if [ -z ${step+x} ] || [ ! -z ${plot+x} ]; then # -z asks if ${plot+x} is empty.
   #plot the optput
   mkdir -p wrath_out/plots
   mkdir -p wrath_out/SVs
-  python ${DIR}/sv_detection.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  python ${DIR}/big_svs/sv_detection.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
