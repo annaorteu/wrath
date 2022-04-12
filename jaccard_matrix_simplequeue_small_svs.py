@@ -26,7 +26,7 @@ start_time = time.time()
 
 parser = argparse.ArgumentParser()
 
-#input and output files 
+#input and output files
 parser.add_argument("-w", "--winFile", help="Input window file", action = "store")
 parser.add_argument("-b", "--barcodeFile", help="Input barcode file", action = "store")
 parser.add_argument("-o", "--outFile", help="Output jaccard matrix file", action = "store")
@@ -49,7 +49,7 @@ if args.outFile:
     outFile = open(args.outFile, "wt")
 else: outFile = sys.stdout
 
-#read windows 
+#read windows
 windowFile = pd.read_csv(args.winFile, sep='\t', lineterminator='\n', header=None)
 total_num_win = windowFile.shape[0]
 
@@ -62,7 +62,7 @@ windowFile=pd.DataFrame(windowFile)
 windowFile.index.name = 'index'
 windowFile.reset_index(inplace=True)
 
-#read barcodes 
+#read barcodes
 tbx = pysam.TabixFile(args.barcodeFile)
 
 
@@ -79,10 +79,10 @@ def freqs_wrapper(inQueue, resultQueue, number_win, inFile):
             resultQueue.put((-1,None,)) # this is the way of telling everything we're done
             break
         array_i = np.zeros((number_win))
-        array_u = np.ones((number_win)) 
+        array_u = np.ones((number_win))
         bedfile1 = inFile.fetch(windowLine[0], windowLine[1], windowLine[2],  parser=pysam.asBed(), multiple_iterators=True)
         barcodes1 = [rowbed1.name for rowbed1 in bedfile1]
-        
+
         windomMax=windowNumber+number_win #set the last window to compare
         if total_num_win<windomMax: #if the total number of windows < than the proposed last window to compare, compare only to the last existing window
             windomMax=total_num_win
@@ -94,9 +94,9 @@ def freqs_wrapper(inQueue, resultQueue, number_win, inFile):
             intersect = np.intersect1d(barcodes1, barcodes2)
             union = np.union1d(barcodes1, barcodes2)
             array_i[outIndex] = intersect.size
-            if union.size!=0:    
+            if union.size>1:
                 array_u[outIndex] = union.size
-            elif union.size==0:
+            elif union.size<1:
                 array_u[outIndex] = 1
                 array_i[outIndex] = 0
 
@@ -238,7 +238,7 @@ writerThread.join()
 
 sys.stderr.write("\nDone\n")
 
-sys.stderr.write("My program took {} to run\n".format(time.time() - start_time)) 
+sys.stderr.write("My program took {} to run\n".format(time.time() - start_time))
 
 outFile.close()
 
