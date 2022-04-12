@@ -13,7 +13,7 @@ from sklearn.cluster import AgglomerativeClustering
 
 parser = argparse.ArgumentParser()
 
-#input and output files 
+#input and output files
 parser.add_argument("-m", "--matrix", help="Input matrix", action = "store")
 parser.add_argument("-o", "--outliers", help="Input detected outliers", action = "store")
 parser.add_argument("-p", "--plot", help="Output heatmap plot", action = "store")
@@ -51,19 +51,19 @@ breakPoints = pd.DataFrame(data=d)
 
 #plot heatmap in half a triangle and the detected outliers in the other
 #first define the axis labels. We only want 100 ticks per axis
-yticks=matrix_file.columns.values*10000
-yticks=yticks[0::round(yticks.shape[0]/100)]
+# yticks=matrix_file.columns.values*10000
+# yticks=yticks[0::round(yticks.shape[0]/100)]
+#
+# xticks=matrix_file.index.values*10000
+# xticks[0::round(xticks.shape[0]/100)]
 
-xticks=matrix_file.index.values*10000
-xticks[0::round(xticks.shape[0]/100)]
-
-#then plot and add the outliers 
-heatmap_plot = sns.heatmap(np.log(matrix_file+0.0001)*100, cmap="YlGnBu", square=True, xticklabels=xticks, yticklabels=yticks)
+#then plot and add the outliers
+heatmap_plot = sns.heatmap(np.log(matrix_file+0.0001)*100, cmap="YlGnBu", square=True)
 heatmap_plot.scatter(x=breakPoints['minrow'], y=breakPoints['mincol'], color='k')
 heatmap_plot.scatter(x=breakPoints['maxrow']+1, y=breakPoints['maxcol']+1, color='m')
 
 fig = heatmap_plot.get_figure()
-fig.savefig(outplot) 
+fig.savefig(outplot)
 
 #calculate lengths of svs and sort them by length
 breakPoints['length']=breakPoints['maxcol']-breakPoints['minrow']
@@ -72,4 +72,3 @@ breakPoints.sort_values(by=['length'], ascending=False, inplace=True)
 output_table={'SV_id':breakPoints.index.values, 'start':breakPoints['minrow']*window_size, 'end':breakPoints['maxcol']*window_size, 'length':breakPoints['length']*window_size}
 output_df=pd.DataFrame(output_table)
 output_df.to_csv(output)
-

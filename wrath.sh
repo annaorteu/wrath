@@ -210,7 +210,7 @@ fi
 # Detect SVs without plotting the results
 
 #if the option is given to plot it, then do
-if [ -z ${step+x} ] || [ ! -z ${plot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ -z ${noplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/plots
