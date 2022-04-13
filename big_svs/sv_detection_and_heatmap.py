@@ -72,4 +72,4 @@ breakPoints.sort_values(by=['length'], ascending=False, inplace=True)
 
 output_table={'SV_id':breakPoints.index.values, 'chromosome':chrom, 'start':breakPoints['minrow']*window_size, 'end':breakPoints['maxcol']*window_size, 'length':breakPoints['length']*window_size}
 output_df=pd.DataFrame(output_table)
-output_df.to_csv(output)
+output_df.to_csv(output,index=False)
