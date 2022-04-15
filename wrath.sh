@@ -15,7 +15,7 @@ ${bold}wrath: wrapped analysis of tagged haplotypes
 ${bold}DESCRIPTION:
 ${normal} Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath [-h] [-g GENOMEFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP]
+wrath [-h] [-g GENOMEFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
 
 ${bold}OPTIONS: ${normal}
   -h                show this help text
@@ -26,6 +26,7 @@ ${bold}OPTIONS: ${normal}
   -t THERADS        threads to use
   -p                skip plotting the heatmap
   -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers or plot
+  -l                skip automatic detection of SVs and only plot the heatmap of barcode sharing
   -v                verbose (only for the matrix generating step)
 
 "
@@ -36,7 +37,7 @@ if [ $# == 0 ] ; then
     echo "$usage"
     exit 1;
 fi
-while getopts "g:c:w:s:t:pvx:h" optname
+while getopts "g:c:w:s:t:pvx:lh" optname
   do
     case "$optname" in
       "g") genome="$OPTARG" ;;
@@ -83,6 +84,7 @@ then
         matrix) matrix=1 ;;
         outliers) outliers=1 ;;
         plot) plot=1 ;;
+        onlyplot) onlyplot=1 ;;
         *) echo "Wrong step specified!"
         echo "$usage"
         exit 1
@@ -202,7 +204,7 @@ if [ -z ${step+x} ] || [ ! -z ${plot+x} ]; then # -z asks if ${plot+x} is empty.
   #plot the optput
   mkdir -p wrath_out/plots
   mkdir -p wrath_out/SVs
-  python ${DIR}/big_svs/sv_detection_and_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv  -p wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  python ${DIR}/big_svs/sv_detection_and_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv  -p wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} -c ${chromosome} || { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
 
@@ -216,5 +218,18 @@ if [ ! -z ${noplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${pl
   #plot the optput
   mkdir -p wrath_out/SVs
   python ${DIR}/big_svs/sv_detection.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
+
+fi
+
+
+######################################################################
+# Plot results without automatic detection of SVs
+
+#if the option is given to plot it, then do
+if [ ! -z ${onlyplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+
+  #plot the optput
+  mkdir -p wrath_out/plots
+  python ${DIR}/big_svs/plot_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
