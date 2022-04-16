@@ -125,13 +125,13 @@ If automatic detection of SVs is disabled, upper and lower triangle will show th
 2. Barcode beds: Barcodes are extracted from the bam files and their leftmost mapping position stored in a gzipped bed file in *beds*. Tabix index are also created.   
 3. Matrices: barcode sharing between pairs of windows is calculated and stored in an identity matrix of nxn dimensions. A jaccard index is calculated for each pair of windows:
 
-<img src="https://render.githubusercontent.com/render/math?math=J\left(A,B\right)=\left|A\cap B\right|/\left|A\cup B\right|" width="70%">
+<img src="https://render.githubusercontent.com/render/math?math=J\left(A,B\right)=\left|A\cap B\right|/\left|A\cup B\right|" width="25%">
 
 Where J is the Jaccard distance, and A and B are windows 1 and and 2 respectively.
 
 4. Outliers: we calculate and store the distance of each comparison to the diagonal. Then using this distance and the jaccard index value of the comparison, we fit a double exponential decay model, such that:
 
-<img src="https://render.githubusercontent.com/render/math?math=y\ ~\ e^{(a\ +\ b\ \ast\ e^{(x\ast-c)})}" width="50%">
+<img src="https://render.githubusercontent.com/render/math?math=y\ ~\ e^{(a\ +\ b\ \ast\ e^{(x\ast-c)})}" width="25%">
 
 The model is fit and 95% prediction bands are calculated from it such that:
 
