@@ -6,7 +6,7 @@
 ---
 ## Running wrath
 
-The main script `wrath.sh` runs the main version of *WRATH*.
+The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calculates barcode similarity f
 
 A typical command looks like:
 
@@ -131,10 +131,14 @@ Where J is the Jaccard distance, and A and B are windows 1 and and 2 respectivel
 
 4. Outliers: we calculate and store the distance of each comparison to the diagonal. Then using this distance and the jaccard index value of the comparison, we fit a double exponential decay model, such that:
 
-<img src="https://render.githubusercontent.com/render/math?math=y\ ~\ e^{(a\ +\ b\ \ast\ e^{(x\ast-c)})}" width="25%">
+<img src="https://render.githubusercontent.com/render/math?math=y\ ~\ e^{(a%2Bb\ast\e^{(x\ast(-c))})}" width="25%">
 
 The model is fit and 95% prediction bands are calculated from it such that:
 
 ![model_fit](others/model_fit.png)
 
 Any points above or below the prediction bands are defined as outliers and stored in the *outliers* directory. Several values are stored for each outlier: row number, column number, jaccard distance, y estimate of the model, estimated error, 2.5 quantile, 97.5 quantile and a definition of whether it is an 'upper' or 'lower' outlier.
+
+## Running *WRATH* on multiple chromosomes
+
+The easiest way to run *WRATH* on multiple chromosomes is to run in parallely. If running on a cluster and using a shceduling system such as SLURM, an array can be used to run a job for each chromosome. An example is found in [example array](example_run/example_wrath_slurm_array.sh).
