@@ -125,7 +125,7 @@ If automatic detection of SVs is disabled, upper and lower triangle will show th
 2. Barcode beds: Barcodes are extracted from the bam files and their leftmost mapping position stored in a gzipped bed file in *beds*. Tabix index are also created.   
 3. Matrices: barcode sharing between pairs of windows is calculated and stored in an identity matrix of nxn dimensions. A jaccard index is calculated for each pair of windows:
 
-<img src="https://render.githubusercontent.com/render/math?math=J\left(A,B\right)=\left|A\cap B\right|/\left|A\cup B\right|" width="25%">
+<img src="https://render.githubusercontent.com/render/math?math=J\left(A,B\right)=\left|A\cap B\right|/\left|A\cup B\right|" width="30%">
 
 Where J is the Jaccard distance, and A and B are windows 1 and and 2 respectively.
 
