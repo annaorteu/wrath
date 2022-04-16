@@ -6,7 +6,7 @@
 ---
 ## Running wrath
 
-The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calculates barcode similarity f
+The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome. The main pipeline automatically detects SVs larger than 50kbp. Automatic detection of SVs can be turned off if the only output wanted is the heatmap plot of barcode sharing. 
 
 A typical command looks like:
 
