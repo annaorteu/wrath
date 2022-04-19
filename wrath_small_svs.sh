@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------
 #         Anna Farre Orteu, 2022
 #             af658@cam.ac.uk
-#     Script to detect small SVs in haplotagging data
+#     Script to detect small SVs from haplotagging data
 # ------------------------------------------------------------------
 
 bold=$(tput bold)

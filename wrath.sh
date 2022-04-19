@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------
 #         Anna Farre Orteu, 2022
 #             af658@cam.ac.uk
-#     Script to detect SVs in haplotagging data
+#     Script to detect SVs from haplotagging data
 # ------------------------------------------------------------------
 
 bold=$(tput bold)
@@ -15,11 +15,11 @@ ${bold}wrath: wrapped analysis of tagged haplotypes
 ${bold}DESCRIPTION:
 ${normal} Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath [-h] [-g GENOMEFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
+wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
 
 ${bold}OPTIONS: ${normal}
   -h                show this help text
-  -g FASTAFILE     reference genome
+  -g FASTAFILE      reference genome
   -c CHROMOSOMENAME chromosome
   -w WINDOWSIZE     window size
   -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
