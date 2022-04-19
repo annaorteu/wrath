@@ -19,7 +19,7 @@ wrath [-h] [-g GENOMEFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t
 
 ${bold}OPTIONS: ${normal}
   -h                show this help text
-  -g GENOMEFILE     reference genome
+  -g FASTAFILE     reference genome
   -c CHROMOSOMENAME chromosome
   -w WINDOWSIZE     window size
   -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
@@ -48,6 +48,7 @@ while getopts "g:c:w:s:t:pvx:lh" optname
       "p") noplot=1 ;;
       "v") verbose="--verbose" ;;
       "x") step="$OPTARG" ;;
+      "l") onlyplot=1 ;;
       "h")
         echo "$usage"
         exit 0;
@@ -230,6 +231,6 @@ if [ ! -z ${onlyplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${
 
   #plot the optput
   mkdir -p wrath_out/plots
-  python ${DIR}/big_svs/plot_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  python ${DIR}/big_svs/plot_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png || { >&2 "Plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi

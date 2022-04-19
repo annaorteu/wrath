@@ -6,7 +6,7 @@
 ---
 ## Running wrath
 
-The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome. The main pipeline automatically detects SVs larger than 50kbp. Automatic detection of SVs can be turned off if the only output wanted is the heatmap plot of barcode sharing. Recommended window size is 50kbp. 
+The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome. The main pipeline automatically detects SVs larger than 50kbp. Automatic detection of SVs can be turned off if the only output wanted is the heatmap plot of barcode sharing. Recommended window size is 50kbp.
 
 A typical command looks like:
 
@@ -26,7 +26,7 @@ wrath [-h] [-g GENOMEFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t
 
 OPTIONS:
   -h                show this help text
-  -g GENOMEFILE     reference genome
+  -g FASTAFILE     reference genome
   -c CHROMOSOMENAME chromosome
   -w WINDOWSIZE     window size
   -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
@@ -42,6 +42,7 @@ OPTIONS:
 Command line programs:
 - [samtools](http://www.htslib.org/)
 - [bedtools](https://bedtools.readthedocs.io/en/latest/)
+- [faidx](http://manpages.ubuntu.com/manpages/bionic/man5/faidx.5.html)
 
 Python:
 - [NumPy](https://numpy.org/)

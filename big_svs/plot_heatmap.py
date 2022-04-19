@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser()
 
-#input and output files 
+#input and output files
 parser.add_argument("-m", "--matrix", help="Input matrix", action = "store")
 parser.add_argument("-o", "--outFile", help="Output heatmap file", action = "store")
 
@@ -29,9 +29,9 @@ output = args.outFile
 
 #########################################################################################################################
 
-#plot and save output 
+#plot and save output
 plt.rcParams['figure.figsize'] = [30, 30] #set figure size
 
 heatmap_plot = sns.heatmap(np.log(matrix_file+0.0001)*100, cmap="YlGnBu", square=True)
 fig = heatmap_plot.get_figure()
-fig.savefig(output) 
+fig.savefig(output)
