@@ -1,4 +1,4 @@
-reference genome # WRATH: WRapped Analysis of Tagged Haplotypes
+# WRATH: WRapped Analysis of Tagged Haplotypes
 
 <img src="others/wrath_logo.png" alt="logo" width="50%"/>
 
