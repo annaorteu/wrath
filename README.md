@@ -1,4 +1,4 @@
-# WRATH: WRapped Analysis of Tagged Haplotypes
+reference genome # WRATH: WRapped Analysis of Tagged Haplotypes
 
 <img src="others/wrath_logo.png" alt="logo" width="50%"/>
 
@@ -11,7 +11,7 @@ The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calcul
 A typical command looks like:
 
 ```bash
-wrath.sh -g genome_file.fa -c chromosome_name  -w 50000  -s list_of_bam_files.txt -t 15
+wrath.sh -g reference_genome.fa -c chromosome_name  -w 50000  -s list_of_bam_files.txt -t 15
 ```
 
 Input options are:
@@ -22,7 +22,7 @@ wrath: wrapped analysis of tagged haplotypes
 DESCRIPTION:
  Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath [-h] [-g GENOMEFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP]
+wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP]
 
 OPTIONS:
   -h                show this help text
@@ -73,7 +73,7 @@ install.packages("nlraa")
 
 ## Input files
 
-The input necessary is a genome file in fasta format and a list of the sample bam files that need to be analysed including their paths.
+The input necessary is a reference genome  in fasta format and a list of the sample bam files that need to be analysed including their paths.
 
 Like:
 ```
