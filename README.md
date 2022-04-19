@@ -26,7 +26,7 @@ wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t 
 
 OPTIONS:
   -h                show this help text
-  -g FASTAFILE     reference genome
+  -g FASTAFILE      reference genome
   -c CHROMOSOMENAME chromosome
   -w WINDOWSIZE     window size
   -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
