@@ -240,8 +240,8 @@ if args.count_barcodes:
 #and determines the BX tag based on the barcodes
 #and then writes to either the ouput files or the unassigned files (if no match was found)
 while True:
-    I1 = get_read(index_files[0])
-    I2 = get_read(index_files[1])
+    I1 = get_read(index_files[0], reverse_complement=False)
+    I2 = get_read(index_files[1], reverse_complement=False)
     R1 = get_read(read_files[0])
     R2 = get_read(read_files[1])
     
