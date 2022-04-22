@@ -4,13 +4,15 @@ Illumina data from a haplotagging run consists of four reads:
 * forward and reverse **sequencing** reads
 * forward and reverse **index** reads
 
-(If you are starting from raw illumina files that have not yet been separated into the four read types, see XXX)
 
-The unique barcodes that tag reads from the same molecule are stored in the index reads. `parse_haptag_barcodes.py` will identify the barcodes in the index reads and add this information into the fastq file headers of the forward and reverse sequencing reads. This information can then be used by toos such as *WRATH*.
+The unique barcodes that tag reads from the same molecule are stored in the index reads. See the [original paper](https://doi.org/10.1073/pnas.2015005118) for details. If you are starting from raw illumina files that have not yet been separated into the four read types, see [Processing raw Illumina files](#processing-raw-illumina-files)
+
+`parse_haptag_barcodes.py` will identify the barcodes in the index reads and add this information into the fastq file headers of the forward and reverse sequencing reads. This information can then be used by toos such as *WRATH*.
 
 Each read will be labelled with four codes, one for each of the A, B, C and D barcodes. These are stored in text files `BC_A.txt` etc (see in this repository).
 
 ## Assumptions
+---
 
 This code currently assumes the following:
 
@@ -30,6 +32,7 @@ and
 ```
 
 ## Parse barcode information without demultiplexing separate individuals
+---
 
 To generate a single pair of fastq files with the barcodes tagged, run the script as follows:
 
@@ -52,6 +55,7 @@ Add option `--count_barcodes` to produce an addition output giving the number of
 If your barcode files are not named `BC_A.txt` etc. you will have to add the option `--barcode_files` followd by the file names of the four barcodes files.
 
 ## Parse barcodes and demultiplexing separate individuals
+---
 
 To generate a separate pair of fastq files for each individual, we need a **demultiplexing file**. This gives the C code (`C01-C96`) for each individual. If you multiplexed fewer han 96 individuals on a lane, you might have multiple C codes for each individual.
 
@@ -88,6 +92,7 @@ unassigned.my_experiment.R2.fastq.gz
 ```
 
 ## Processing raw Illumina files
+---
 
 The scripts above use separate sequencing and index reads. If you need to generate these yourself from the raw Illumina data, you need to first ensure that you understand how many bases to expect in each read and index read.
 
