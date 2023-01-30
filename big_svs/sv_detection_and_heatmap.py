@@ -19,7 +19,7 @@ parser.add_argument("-o", "--outliers", help="Input detected outliers", action =
 parser.add_argument("-p", "--plot", help="Output heatmap plot", action = "store")
 parser.add_argument("-s", "--outFile", help="Output SVs", action = "store")
 parser.add_argument("-w", "--winSize", help="Window size", type=int, action = "store", default = 1)
-parser.add_argument("-c", "--chromosome", help="Chromosome name", type=int, action = "store")
+parser.add_argument("-c", "--chromosome", help="Chromosome name", type=str, action = "store")
 
 args = parser.parse_args()
 

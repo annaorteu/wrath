@@ -1,10 +1,10 @@
 # WRATH: WRapped Analysis of Tagged Haplotypes
 
-<img src="others/wrath_logo.png" alt="logo" width="50%"/>
+<img src="images/wrath_logo.png" alt="logo" width="50%"/>
 
 
 ---
-## Running wrath
+## Running Wrath for Structural Variant detection
 
 The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome. The main pipeline automatically detects SVs larger than 50kbp. Automatic detection of SVs can be turned off if the only output wanted is the heatmap plot of barcode sharing. Recommended window size is 50kbp.
 
@@ -22,7 +22,7 @@ wrath: wrapped analysis of tagged haplotypes
 DESCRIPTION:
  Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP]
+wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP]
 
 OPTIONS:
   -h                show this help text
@@ -136,7 +136,7 @@ Where J is the Jaccard distance, and A and B are windows 1 and and 2 respectivel
 
 The model is fit and 95% prediction bands are calculated from it such that:
 
-![model_fit](others/model_fit.png)
+![model_fit](images/model_fit.png)
 
 Any points above or below the prediction bands are defined as outliers and stored in the *outliers* directory. Several values are stored for each outlier: row number, column number, jaccard distance, y estimate of the model, estimated error, 2.5 quantile, 97.5 quantile and a definition of whether it is an 'upper' or 'lower' outlier.
 

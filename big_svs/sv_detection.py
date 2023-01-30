@@ -12,7 +12,7 @@ from sklearn.cluster import AgglomerativeClustering
 
 parser = argparse.ArgumentParser()
 
-#input and output files 
+#input and output files
 parser.add_argument("-m", "--matrix", help="Input matrix", action = "store")
 parser.add_argument("-o", "--outliers", help="Input detected outliers", action = "store")
 parser.add_argument("-s", "--outFile", help="Output SVs", action = "store")
@@ -50,4 +50,3 @@ breakPoints.sort_values(by=['length'], ascending=False, inplace=True)
 output_table={'SV_id':breakPoints.index.values, 'start':breakPoints['minrow']*window_size, 'end':breakPoints['maxcol']*window_size, 'length':breakPoints['length']*window_size}
 output_df=pd.DataFrame(output_table)
 output_df.to_csv(output)
-

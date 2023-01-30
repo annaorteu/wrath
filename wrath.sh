@@ -10,12 +10,12 @@ normal=$(tput sgr0)
 
 subject=wrath
 usage="
-${bold}wrath: wrapped analysis of tagged haplotypes
+${bold}Wrath: wrapped analysis of tagged haplotypes
 
 ${bold}DESCRIPTION:
 ${normal} Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
+wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
 
 ${bold}OPTIONS: ${normal}
   -h                show this help text
@@ -128,7 +128,7 @@ mkdir -p wrath_out
 ######################################################################
 # Make genomic windows
 
-if [ -z ${step+x} ] || [ ! -z ${makewins+x} ]; then
+if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
 
   mkdir -p wrath_out/beds
   #check if the file with genome sizes already exists
@@ -152,13 +152,14 @@ fi
 ######################################################################
 # Get barcodes
 
-if [ -z ${step+x} ] || [ ! -z ${getbarcodes+x} ]; then
+if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ]; then
 
   #get barcodes by phenotype
   for sample in $(cat ${group})
   do
     echo "Getting ${sample} barcodes from ${chromosome}"
-    samtools view -q 1 -@ ${threads} ${sample} ${chromosome} | grep -o -P "${chromosome}.*BX:Z:[0-9A-Z]*\t" | awk '{print $1"\t"$2"\t"$2"\t"$NF}' > wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_$(basename $sample .bam).bed ; done || { >&2 echo "Getting ${sample} barcodes from ${chromosome} failed" ; exit 1; }
+    samtools view -q 20 -@ ${threads} ${sample} ${chromosome} | grep -o -P "${chromosome}.*BX:Z:[0-9A-Z]*\t" | awk '{print $1"\t"$2"\t"$2"\t"$NF}' > wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_$(basename $sample .bam).bed
+  done || { >&2 echo "Getting ${sample} barcodes from ${chromosome} failed" ; exit 1; }
 
   #sort barcodes
   echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome}"
@@ -170,7 +171,7 @@ fi
 ######################################################################
 # Generate similarity matrix
 
-if [ -z ${step+x} ] || [ ! -z ${matrix+x} ]; then
+if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ]; then
 
   mkdir -p wrath_out/matrices
   # compute the jaccard index and save it in a matrix
@@ -187,7 +188,7 @@ fi
 ######################################################################
 # Detect outliers
 
-if [ -z ${step+x} ] || [ ! -z ${outliers+x} ]; then
+if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ -z ${onlyplot+x} ]; then
 
   echo "Detecting outliers"
   mkdir -p wrath_out/outliers
@@ -200,7 +201,7 @@ fi
 # Detect SVs and plot results
 
 #if the option is given to plot it, then do
-if [ -z ${step+x} ] || [ ! -z ${plot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ -z ${step+x} ] || [ -z ${onlyplot+x} ] || [ -z ${noplot+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${plot+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ -z ${onlyplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/plots

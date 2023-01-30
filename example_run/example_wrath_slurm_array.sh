@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -J jaccard 
+#SBATCH -J jaccard
 #SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --tasks=1
@@ -11,9 +11,8 @@
 #SBATCH -A JIGGINS-SL3-CPU
 #SBATCH --array=1-195
 
-chr=`cat Hera_chr |awk 'NR == '$SLURM_ARRAY_TASK_ID' {print $1}'`
+chr=$(sed -n "$SLURM_ARRAY_TASK_ID"p Hera_chr)
 
 module load python-3.6.1-gcc-5.4.0-23fr5u4
 
-~/wrath/wrath -g ~/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa -c ${chr}  -w 10000  -s all_erato.txt -t 15 
-
+~/wrath/wrath -g ~/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa -c ${chr}  -w 10000  -s all_erato.txt -t 15
