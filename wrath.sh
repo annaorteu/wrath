@@ -25,7 +25,7 @@ ${bold}OPTIONS: ${normal}
   -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
   -t THERADS        threads to use
   -p                skip plotting the heatmap
-  -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers or plot
+  -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers (only if -l given) or plot
   -l                automatic detection of SVs
   -v                verbose (only for the matrix generating step)
 
@@ -92,13 +92,14 @@ then
         makewindows) makewindows=1 ;;
         getbarcodes) getbarcodes=1 ;;
         matrix) matrix=1 ;;
-        outliers) outliers=1 ;;
+        outliers) outliersStep=1 ;;
         plot) plot=1 ;;
         *) echo "Wrong step specified!"
         echo "$usage"
         exit 1
     esac
 fi
+
 
 # -----------------------------------------------------------------
 #  SCRIPT LOGIC GOES HERE
@@ -154,13 +155,15 @@ if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
   bedtools makewindows -g wrath_out/size.${chromosome} -w ${winSize} >  wrath_out/beds/windows_${winSize}_${chromosome}.bed || { >&2 echo "Making ${winSize} windows of ${chromosome} failed" ; exit 1; } #need to split the bed file in multiple beds one per chr
 
   rm wrath_out/size.${chromosome}
+
+  getbarcodes=1 ;;
 fi
 
 
 ######################################################################
 # Get barcodes
 
-if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ]; then
+if [ -z ${step+x} ] || [ ! -z ${getbarcodes+x} ]; then
 
   #get barcodes by phenotype
   for sample in $(cat ${group})
@@ -172,6 +175,7 @@ if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ]; then
   #sort barcodes
   echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome}"
   cat wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_*bed | bedtools sort -i - | bgzip -@ ${threads} > wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz && tabix wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz && rm wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_*bed || { >&2 echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome} failed" ; exit 1; }
+  matrix==1 ;;
 
 fi
 
@@ -179,7 +183,7 @@ fi
 ######################################################################
 # Generate similarity matrix
 
-if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ]; then
+if [ -z ${step+x} ] || [ ! -z ${matrix+x} ]; then
 
   mkdir -p wrath_out/matrices
   # compute the jaccard index and save it in a matrix
@@ -189,6 +193,21 @@ if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ 
   #edit the output (remove a colon at the end of the line)
   echo "Editing of jacard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize}"
   sed -i 's/,$//' wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt || { >&2 echo "Editing of jacard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize} failed" ; exit 1; }
+  plot==1 ;;
+  outliersStep==1 ;;
+
+fi
+
+
+######################################################################
+# Plot results without automatic detection of SVs
+
+#if the option is given to plot it, then do
+if [ -z ${step+x} ] || [ -z ${plot+x} ] || [ -z ${autodetect+x} ] || [ ! -z ${noplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+
+  #plot the optput
+  mkdir -p wrath_out/plots
+  python ${DIR}/big_svs/plot_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png || { >&2 "Plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
 
@@ -196,7 +215,7 @@ fi
 ######################################################################
 # Detect outliers
 
-if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -z ${autodetect+x} ]; then
+if [ -z ${step+x} ]  || [ ! -z ${outliersStep+x} ] && [ ! -z ${autodetect+x} ] ; then
 
   echo "Detecting outliers"
   mkdir -p wrath_out/outliers
@@ -209,7 +228,7 @@ fi
 # Detect SVs and plot results
 
 #if the option is given to plot it, then do
-if [ -z ${step+x} ] || [ -z ${noplot+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${plot+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/plots
@@ -223,23 +242,10 @@ fi
 # Detect SVs without plotting the results
 
 #if the option is given to plot it, then do
-if [ ! -z ${noplot+x} ] || [ ! -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ ! -z ${noplot+x} ] && [ ! -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/SVs
   python ${DIR}/big_svs/sv_detection.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv -s wrath_out/SVs/sv_${winSize}_${chromosome}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
-
-fi
-
-
-######################################################################
-# Plot results without automatic detection of SVs
-
-#if the option is given to plot it, then do
-if [ -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
-
-  #plot the optput
-  mkdir -p wrath_out/plots
-  python ${DIR}/big_svs/plot_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt -o wrath_out/plots/heatmap_${winSize}_${chromosome}_$(basename "$group" .txt).png || { >&2 "Plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
