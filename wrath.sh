@@ -209,7 +209,7 @@ fi
 # Detect SVs and plot results
 
 #if the option is given to plot it, then do
-if [ -z ${step+x} ] || [ ! -z ${autodetect+x} ] || [ -z ${noplot+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${plot+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ -z ${step+x} ] || [ -z ${noplot+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${plot+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/plots

@@ -6,7 +6,7 @@
 ---
 ## Running Wrath for Structural Variant detection
 
-The main script `wrath.sh` runs the main version of *WRATH*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome. The main pipeline automatically detects SVs larger than 50kbp. Automatic detection of SVs can be turned off if the only output wanted is the heatmap plot of barcode sharing. Recommended window size is 50kbp.
+The main script `wrath.sh` runs the main version of *Wrath*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome and produces heatmap plots of barcode sharing. The main pipeline cal also automatically detect large SVs. Default window size is 50kbp.
 
 A typical command looks like:
 
@@ -28,9 +28,9 @@ OPTIONS:
     -h                show this help text
     -g FASTAFILE      reference genome
     -c CHROMOSOMENAME chromosome
-    -w WINDOWSIZE     window size
+    -w WINDOWSIZE     window size. Default 50kbp
     -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
-    -t THERADS        threads to use
+    -t THERADS        threads to use. Default 1.
     -p                skip plotting the heatmap
     -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers or plot
     -l                automatic detection of SVs
@@ -123,7 +123,7 @@ Heatmap plot of barcode sharing between windows of a given chromosome. If automa
 If automatic detection of SVs is disabled, upper and lower triangle will show the same data, barcode sharing between windows.
 
 ### 3. Outliers, matrices and beds
-1. Window beds: To calculate barcode sharing between windows, first *WRATH* splits the chromosome in n windows of size m. The coordinates of those windows are stored in a bed file in the directory *beds*.
+1. Window beds: To calculate barcode sharing between windows, first *Wrath* splits the chromosome in n windows of size m. The coordinates of those windows are stored in a bed file in the directory *beds*.
 2. Barcode beds: Barcodes are extracted from the bam files and their leftmost mapping position stored in a gzipped bed file in *beds*. Tabix index are also created.   
 3. Matrices: barcode sharing between pairs of windows is calculated and stored in an identity matrix of nxn dimensions. A jaccard index is calculated for each pair of windows:
 
@@ -141,6 +141,6 @@ The model is fit and 95% prediction bands are calculated from it such that:
 
 Any points above or below the prediction bands are defined as outliers and stored in the *outliers* directory. Several values are stored for each outlier: row number, column number, jaccard distance, y estimate of the model, estimated error, 2.5 quantile, 97.5 quantile and a definition of whether it is an 'upper' or 'lower' outlier.
 
-## Running *WRATH* on multiple chromosomes
+## Running *Wrath* on multiple chromosomes
 
-The easiest way to run *WRATH* on multiple chromosomes is to run in parallely. If running on a cluster and using a shceduling system such as SLURM, an array can be used to run a job for each chromosome. An example is found in [example array](example_run/example_wrath_slurm_array.sh).
+The easiest way to run *Wrath* on multiple chromosomes is to run in parallely. If running on a cluster and using a shceduling system such as SLURM, an array can be used to run a job for each chromosome. An example is found in [example array](example_run/example_wrath_slurm_array.sh).
