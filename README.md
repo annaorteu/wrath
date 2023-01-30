@@ -1,4 +1,4 @@
-# WRATH: WRapped Analysis of Tagged Haplotypes
+# Wrath: WRapped Analysis of Tagged Haplotypes
 
 <img src="images/wrath_logo.png" alt="logo" width="50%"/>
 
