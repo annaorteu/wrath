@@ -42,9 +42,9 @@ while getopts "g:c:w:s:t:pvx:lh" optname
     case "$optname" in
       "g") genome="$OPTARG" ;;
       "c") chromosome="$OPTARG" ;;
-      "w") winSize="${OPTARG:-50000}" ;;
+      "w") winSize="${OPTARG}" ;;
       "s") group="$OPTARG" ;;
-      "t") threads="${OPTARG:-1}" ;;
+      "t") threads="${OPTARG}" ;;
       "p") noplot=1 ;;
       "v") verbose="--verbose" ;;
       "x") step="$OPTARG" ;;
@@ -76,6 +76,15 @@ fi
 
 shift $(($OPTIND - 1))
 
+#if unset, set window size to 50kb
+if [ -z ${winSize+x} ]; then
+  winSize=50000
+fi
+
+#if unset, set number of threads to 1
+if [ -z ${threads+x} ]; then
+  threads=1
+fi
 
 if [ ! -z "$step" ]
 then
