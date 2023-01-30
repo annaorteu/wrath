@@ -26,7 +26,7 @@ ${bold}OPTIONS: ${normal}
   -t THERADS        threads to use
   -p                skip plotting the heatmap
   -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers or plot
-  -l                skip automatic detection of SVs and only plot the heatmap of barcode sharing
+  -l                automatic detection of SVs
   -v                verbose (only for the matrix generating step)
 
 "
@@ -42,13 +42,13 @@ while getopts "g:c:w:s:t:pvx:lh" optname
     case "$optname" in
       "g") genome="$OPTARG" ;;
       "c") chromosome="$OPTARG" ;;
-      "w") winSize="$OPTARG" ;;
+      "w") winSize="${OPTARG:-50000}" ;;
       "s") group="$OPTARG" ;;
-      "t") threads="$OPTARG" ;;
+      "t") threads="${OPTARG:-1}" ;;
       "p") noplot=1 ;;
       "v") verbose="--verbose" ;;
       "x") step="$OPTARG" ;;
-      "l") onlyplot=1 ;;
+      "l") autodetect=1 ;;
       "h")
         echo "$usage"
         exit 0;
@@ -85,7 +85,6 @@ then
         matrix) matrix=1 ;;
         outliers) outliers=1 ;;
         plot) plot=1 ;;
-        onlyplot) onlyplot=1 ;;
         *) echo "Wrong step specified!"
         echo "$usage"
         exit 1
@@ -188,7 +187,7 @@ fi
 ######################################################################
 # Detect outliers
 
-if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ -z ${onlyplot+x} ]; then
+if [ -z ${step+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -z ${autodetect+x} ]; then
 
   echo "Detecting outliers"
   mkdir -p wrath_out/outliers
@@ -201,7 +200,7 @@ fi
 # Detect SVs and plot results
 
 #if the option is given to plot it, then do
-if [ -z ${step+x} ] || [ -z ${onlyplot+x} ] || [ -z ${noplot+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${plot+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ -z ${onlyplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ -z ${step+x} ] || [ ! -z ${autodetect+x} ] || [ -z ${noplot+x} ] || [ ! -z ${makewins+x} ] || [ ! -z ${getbarcodes+x} ] || [ ! -z ${matrix+x} ] || [ ! -z ${plot+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/plots
@@ -215,7 +214,7 @@ fi
 # Detect SVs without plotting the results
 
 #if the option is given to plot it, then do
-if [ ! -z ${noplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ ! -z ${noplot+x} ] || [ ! -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/SVs
@@ -228,7 +227,7 @@ fi
 # Plot results without automatic detection of SVs
 
 #if the option is given to plot it, then do
-if [ ! -z ${onlyplot+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
+if [ -z ${autodetect+x} ]; then # -z asks if ${plot+x} is empty. Thus, [ ! -z ${plot+x} ] asks if ${plot+x} is not empty
 
   #plot the optput
   mkdir -p wrath_out/plots

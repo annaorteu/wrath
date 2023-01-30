@@ -22,18 +22,19 @@ wrath: wrapped analysis of tagged haplotypes
 DESCRIPTION:
  Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP]
+wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
 
 OPTIONS:
-  -h                show this help text
-  -g FASTAFILE      reference genome
-  -c CHROMOSOMENAME chromosome
-  -w WINDOWSIZE     window size
-  -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
-  -t THERADS        threads to use
-  -p                skip plotting the heatmap
-  -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers or plot
-  -v                verbose (only for the matrix generating step)
+    -h                show this help text
+    -g FASTAFILE      reference genome
+    -c CHROMOSOMENAME chromosome
+    -w WINDOWSIZE     window size
+    -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
+    -t THERADS        threads to use
+    -p                skip plotting the heatmap
+    -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers or plot
+    -l                automatic detection of SVs
+    -v                verbose (only for the matrix generating step)
 ```
 
 
