@@ -13,6 +13,9 @@
 
 chr=$(sed -n "$SLURM_ARRAY_TASK_ID"p Hera_chr)
 
+#load the necessary modules
+module load bedtools
 module load python-3.6.1-gcc-5.4.0-23fr5u4
+module load R/4.0.3
 
 ~/wrath/wrath -g ~/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa -c ${chr}  -w 10000  -s all_erato.txt -t 15

@@ -10,7 +10,7 @@ normal=$(tput sgr0)
 
 subject=wrath
 usage="
-${bold}wrath: wrapped analysis of tagged haplotypes
+${bold}Wrath: wrapped analysis of tagged haplotypes
 
 ${bold}DESCRIPTION:
 ${normal} Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
