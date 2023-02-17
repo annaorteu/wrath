@@ -156,7 +156,7 @@ if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
 
   rm wrath_out/size.${chromosome}
 
-  getbarcodes=1 ;;
+  getbarcodes=1
 
 fi
 
@@ -176,7 +176,7 @@ if [ -z ${step+x} ] || [ ! -z ${getbarcodes+x} ]; then
   #sort barcodes
   echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome}"
   cat wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_*bed | bedtools sort -i - | bgzip -@ ${threads} > wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz && tabix wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz && rm wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_*bed || { >&2 echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome} failed" ; exit 1; }
-  matrix==1 ;;
+  matrix==1
 
 fi
 
@@ -194,8 +194,8 @@ if [ -z ${step+x} ] || [ ! -z ${matrix+x} ]; then
   #edit the output (remove a colon at the end of the line)
   echo "Editing of jacard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize}"
   sed -i 's/,$//' wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt || { >&2 echo "Editing of jacard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize} failed" ; exit 1; }
-  plot==1 ;;
-  outliersStep==1 ;;
+  plot==1
+  outliersStep==1
 
 fi
 
