@@ -157,6 +157,7 @@ if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
   rm wrath_out/size.${chromosome}
 
   getbarcodes=1 ;;
+
 fi
 
 
