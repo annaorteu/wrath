@@ -170,7 +170,7 @@ if [ -z ${step+x} ] || [ ! -z ${getbarcodes+x} ]; then
   for sample in $(cat ${group})
   do
     echo "Getting ${sample} barcodes from ${chromosome}"
-    samtools view -q 20 -@ ${threads} ${sample} ${chromosome} | grep -o -P "${chromosome}.*BX:Z:[0-9A-Z]*\t" | awk '{print $1"\t"$2"\t"$2"\t"$NF}' > wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_$(basename $sample .bam).bed
+    samtools view -q 20 -@ ${threads} ${sample} ${chromosome} | grep -o -P "${chromosome}.*BX:Z:.*?\t" | awk '{print $1"\t"$2"\t"$2"\t"$NF}' > wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_$(basename $sample .bam).bed
   done || { >&2 echo "Getting ${sample} barcodes from ${chromosome} failed" ; exit 1; }
 
   #sort barcodes
