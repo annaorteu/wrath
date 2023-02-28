@@ -43,7 +43,7 @@ fm.Theoph.prd.bnd <- predict2_nls(fm, interval = "prediction", level = 0.95)
 fm.Theoph.prd.bnd.dat <- cbind(points, fm.Theoph.prd.bnd)
 
 ## Plot it
-fm.Theoph.prd.bnd.dat %>%
+plot = fm.Theoph.prd.bnd.dat %>%
   ggplot(aes(x = x, y = y)) +
   geom_point() +
   geom_line(aes(x = x, y = Estimate), colour="blue") +
@@ -67,4 +67,9 @@ outliers = fm.Theoph.prd.bnd.dat %>% cbind(data_df_upper) %>%
 
 
 # write out
-write.table(outliers, file=args[2], sep=",", quote = FALSE, row.names = FALSE, col.names = TRUE)
+write.table(outliers, file=paste(args[2], ".csv", sep=""), sep=",", quote = FALSE, row.names = FALSE, col.names = TRUE)
+
+png(file=paste(args[2], "_plot.png", sep=""),
+width=600, height=350)
+plot
+dev.off()

@@ -220,7 +220,7 @@ if [ -z ${step+x} ]  || [ ! -z ${outliersStep+x} ] && [ ! -z ${autodetect+x} ] ;
 
   echo "Detecting outliers"
   mkdir -p wrath_out/outliers
-  Rscript ${DIR}/big_svs/outlier_detection.R wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt).csv || { >&2 "Detecting outliers from matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  Rscript ${DIR}/big_svs/outlier_detection.R wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt wrath_out/outliers/outliers_${winSize}_${chromosome}_$(basename "$group" .txt) || { >&2 "Detecting outliers from matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
 
