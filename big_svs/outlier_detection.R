@@ -59,7 +59,7 @@ plot = fm.Theoph.prd.bnd.dat %>%
   theme_minimal()
 
 ##outlier list
-outliers = fm.Theoph.prd.bnd.dat %>% cbind(data_df_upper) %>%
+outliers = fm.Theoph.prd.bnd.dat %>% bind_cols(data_df_upper) %>%
   mutate(upper=(y>Q97.5)) %>%
   mutate(lower=(y<Q2.5)) %>%
   filter(upper==TRUE|lower==TRUE,x>5) %>%
