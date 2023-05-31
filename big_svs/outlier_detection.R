@@ -39,13 +39,13 @@ fo <- y ~ exp(a + b * exp(x*-c))
 fm <- nls(fo, points, start = list(a = 1, b = 1, c=1))
 
 # calculate and plot the prediction bands
-fm.Theoph.prd.bnd <- predict2_nls(fm, interval = "prediction", level = 0.95)
+fm.Theoph.prd.bnd <- predict2_nls(fm, interval = "prediction", level = 0.99)
 fm.Theoph.prd.bnd.dat <- cbind(points, fm.Theoph.prd.bnd)
 
 # define a filter for windows that are close to each other (too noisy to detect SVs)
 # this gets the subtraction of fm.Theoph.prd.bnd.dat$Q2.5[n] - fm.Theoph.prd.bnd.dat$Q2.5[n-1]
 # then gets the value > 0.0001 (arbitrary cutoff) that has the smallest index
-min_index = which(((diff(fm.Theoph.prd.bnd.dat$Q2.5)*-1)>0.0001)==FALSE)[1]
+min_index = which(((diff(fm.Theoph.prd.bnd.dat$Q0.5)*-1)>0.0001)==FALSE)[1]
 
 ## Plot it
 plot = fm.Theoph.prd.bnd.dat %>%
@@ -53,26 +53,27 @@ plot = fm.Theoph.prd.bnd.dat %>%
   geom_point() +
   geom_line(aes(x = x, y = Estimate), colour="blue") +
   geom_ribbon(data = fm.Theoph.prd.bnd.dat,
-              aes(x = x, ymin = Q2.5, ymax = Q97.5), fill = "purple", alpha=0.3) +
+              aes(x = x, ymin = Q0.5, ymax = Q99.5), fill = "purple", alpha=0.3) +
   xlab("Distance from matrix") + ylab("Similarity index") +
   ggtitle("95% prediction bands")+
-  #geom_vline(xintercept = 5)+
   geom_point(data = fm.Theoph.prd.bnd.dat %>%
-               mutate(out=(y>Q97.5 | y<Q2.5)) %>%
-               filter(out==TRUE, , x>min_index), aes(x = x, y = y), colour="#FF6600")+
+               mutate(out=(y>Q99.5 | y<Q0.5)) %>%
+               filter(out==TRUE, x>min_index), aes(x = x, y = y), colour="#FF6600")+
   theme(legend.position = "none")+
   theme_minimal()
 
+
+## save the plot
+ggsave(paste(args[2], "_plot.png", sep=""), plot, width=6, height=3.5, dpi=300)
+
 ##outlier list
 outliers = fm.Theoph.prd.bnd.dat %>% bind_cols(data_df_upper) %>%
-  mutate(upper=(y>Q97.5)) %>%
-  mutate(lower=(y<Q2.5)) %>%
-  filter(upper==TRUE|lower==TRUE,x>5) %>%
-  dplyr::select("nrow", "ncol", "value", "Estimate", "Est.Error", "Q2.5", "Q97.5", "upper", "lower")
+  mutate(upper=(y>Q99.5)) %>%
+  mutate(lower=(y<Q0.5)) %>%
+  filter(upper==TRUE|lower==TRUE,x>min_index) %>%
+  dplyr::select("nrow", "ncol", "value", "Estimate", "Est.Error", "Q0.5", "Q99.5", "upper", "lower")
 
 
 # write out the outliers and the plot
 write.table(outliers, file=paste(args[2], ".csv", sep=""), sep=",", quote = FALSE, row.names = FALSE, col.names = TRUE)
-
-ggplot2::ggsave(filename=paste(args[2], "_plot.png", sep=""), plot=plot, width=6, height=3.5, dpi=300)
 
