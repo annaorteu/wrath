@@ -55,7 +55,7 @@ plot = fm.Theoph.prd.bnd.dat %>%
   geom_ribbon(data = fm.Theoph.prd.bnd.dat,
               aes(x = x, ymin = Q0.5, ymax = Q99.5), fill = "purple", alpha=0.3) +
   xlab("Distance from matrix") + ylab("Similarity index") +
-  ggtitle("95% prediction bands")+
+  ggtitle("99% prediction bands")+
   geom_point(data = fm.Theoph.prd.bnd.dat %>%
                mutate(out=(y>Q99.5 | y<Q0.5)) %>%
                filter(out==TRUE, x>min_index), aes(x = x, y = y), colour="#FF6600")+
