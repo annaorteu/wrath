@@ -57,7 +57,7 @@ scaled_full_df <- scaled_full_df[-1,]
 
 #### PART 3: MODEL FIT AND PREDICTION BAND CALCULATION ####
 # fit the model
-fo <- y ~ exp(a + b * exp(x*-c))
+fo <- y ~ exp(a + b * exp(-x*c))
 fm <- nls(fo, points, start = list(a = 1, b = 1, c=1))
 
 # calculate and plot the prediction bands
