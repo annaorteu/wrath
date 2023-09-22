@@ -43,7 +43,7 @@ colnames(points) <- c("y", "x", "ncol", "nrow")
 
 #### PART 2: Z-SCORE CALCULATION ####
 # calculate z scores grouping values by their distance to the diagonal
-scaled_full_df <- tibble(z_score=0,y=0, x=0, nrow=0,ncol=0)
+scaled_full_df <- tibble(z_score=numeric(),y=numeric(), x=numeric(), nrow=numeric(),ncol=numeric())
 
 for (index in unique(points$x)) {
   group_indices <- which(points$x == index)
@@ -52,7 +52,6 @@ for (index in unique(points$x)) {
   scaled_df <- tibble(z_score=scaled_group,y=points[group_indices,]$y, x=index, nrow=points[group_indices,]$nrow, ncol=points[group_indices,]$ncol)
   scaled_full_df <- rbind(scaled_full_df,scaled_df)
 }
-scaled_full_df <- scaled_full_df[-1,]
 
 
 #### PART 3: MODEL FIT AND PREDICTION BAND CALCULATION ####
