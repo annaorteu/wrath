@@ -45,7 +45,6 @@ OPTIONS:
 Command line programs:
 - [samtools](http://www.htslib.org/)
 - [bedtools](https://bedtools.readthedocs.io/en/latest/)
-- [faidx](http://manpages.ubuntu.com/manpages/bionic/man5/faidx.5.html)
 
 Python:
 - [NumPy](https://numpy.org/)

@@ -148,7 +148,8 @@ if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
   if [ ! -f wrath_out/size.genome ]; then
     # first get chromosome sizes from the reference
     echo "Getting chromsome sizes"
-    faidx ${genome} -i chromsizes > wrath_out/size.genome || { >&2 echo 'Getting chromosome sizes from genome file failed' ; exit 1; }
+    samtools faidx ${genome} || { >&2 echo 'Reference genome indexing failed failed' ; exit 1; }
+    cut -f1,2 ${genome}.fai > wrath_out/size.genome || { >&2 echo 'Getting chromosome sizes from genome file failed' ; exit 1; }
   fi
 
   #then make windows
