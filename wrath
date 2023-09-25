@@ -155,18 +155,25 @@ if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
   echo "Getting ${chromosome} size from genome file"
   awk -v pat="${chromosome}" '$1 == pat {print $0}' wrath_out/size.genome > wrath_out/size.${chromosome} || { >&2 echo "Getting ${chromosome} size from genome file failed" ; exit 1; }
 
-  echo "Making ${winSize} windows of ${chromosome}"
-  bedtools makewindows -g wrath_out/size.${chromosome} -w ${winSize} >  wrath_out/beds/windows_${winSize}_${chromosome}.bed || { >&2 echo "Making ${winSize} windows of ${chromosome} failed" ; exit 1; } #need to split the bed file in multiple beds one per chr
-  
   #check if start and end positions are given
   if [ ! -z ${start+x} ] && [ ! -z ${end+x} ]; then
     echo "Start and end positions to subset windows are given"
     echo "Start: ${start}"
     echo "End: ${end}"
-    awk -v a="$start" -v b="$end" '$2>a && $3<b {print $0}' wrath_out/beds/windows_${winSize}_${chromosome}.bed > wrath_out/beds/windows_${winSize}_${chromosome}_sub.bed
+    echo "Making ${winSize} windows of ${chromosome} from ${start} to ${end}"
+    echo "Making ${winSize} windows of ${chromosome}"
+    bedtools makewindows -g wrath_out/size.${chromosome} -w ${winSize} >  wrath_out/beds/windows_${winSize}_${chromosome}.bed || { >&2 echo "Making ${winSize} windows of ${chromosome} failed" ; exit 1; } #need to split the bed file in multiple beds one per chr
+    awk -v a="$start" -v b="$end" '$2>a && $3<b {print $0}' wrath_out/beds/windows_${winSize}_${chromosome}.bed > wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed
     rm wrath_out/beds/windows_${winSize}_${chromosome}.bed
-    mv wrath_out/beds/windows_${winSize}_${chromosome}_sub.bed  wrath_out/beds/windows_${winSize}_${chromosome}.bed
+    
+  else
+    echo "Start and end positions to subset windows are not given"
+    start=1
+    end=$(cat wrath_out/size.${chromosome} | awk '{print $2}')
+    echo "Making ${winSize} windows of ${chromosome} from ${start} to ${end}"
+    bedtools makewindows -g wrath_out/size.${chromosome} -w ${winSize} >  wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed || { >&2 echo "Making ${winSize} windows of ${chromosome} failed" ; exit 1; } #need to split the bed file in multiple beds one per chr
   fi
+
 
   rm wrath_out/size.${chromosome}
   
@@ -182,9 +189,9 @@ if [ -z ${step+x} ] || [ ! -z ${getbarcodes+x} ]; then
 
   #get barcodes by phenotype
   for sample in $(cat ${group})
-  do
+    do
     echo "Getting ${sample} barcodes from ${chromosome}"
-    samtools view -q 20 -@ ${threads} ${sample} ${chromosome} | grep -o -P "${chromosome}.*BX:Z:.*?\t" | awk '{print $1"\t"$2"\t"$2"\t"$NF}' > wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_$(basename $sample .bam).bed
+    samtools view -q 20 -@ ${threads} ${sample} ${chromosome}:${start}-${end} | grep -o -P "${chromosome}.*BX:Z:.*?\t" | awk '{print $1"\t"$2"\t"$3"\t"$NF}' > wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_$(basename $sample .bam).bed
   done || { >&2 echo "Getting ${sample} barcodes from ${chromosome} failed" ; exit 1; }
 
   #sort barcodes
@@ -203,7 +210,7 @@ if [ -z ${step+x} ] || [ ! -z ${matrix+x} ]; then
   mkdir -p wrath_out/matrices
   # compute the jaccard index and save it in a matrix
   echo "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize}"
-  python ${DIR}/big_svs/jaccard_matrix_simplequeue.py  --threads ${threads} -w wrath_out/beds/windows_${winSize}_${chromosome}.bed -b wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz  -o wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt ${verbose} || { >&2 echo  "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize} failed" ; exit 1; }
+  python ${DIR}/big_svs/jaccard_matrix_simplequeue.py  --threads ${threads} -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed -b wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz  -o wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt ${verbose} || { >&2 echo  "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize} failed" ; exit 1; }
 
   #edit the output (remove a colon at the end of the line)
   echo "Editing of jacard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize}"
