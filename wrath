@@ -15,19 +15,21 @@ ${bold}Wrath: wrapped analysis of tagged haplotypes
 ${bold}DESCRIPTION:
 ${normal} Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THREADS] [-p] [-v] [-x STEP] [-l]
+wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-a FILELIST] [-t THREADS] [-p] [-v] [-x STEP] [-l] [-s START] [-e END]
 
 ${bold}OPTIONS: ${normal}
   -h                show this help text
   -g FASTAFILE      reference genome
   -c CHROMOSOMENAME chromosome
   -w WINDOWSIZE     window size
-  -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
+  -a FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
   -t THREADS        threads to use
   -p                skip plotting the heatmap
   -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers (only if -l given) or plot
   -l                automatic detection of SVs
   -v                verbose (only for the matrix generating step)
+  -s START          start position to subset windows
+  -e END            end position to subset windows
 
 "
 
@@ -43,12 +45,14 @@ while getopts "g:c:w:s:t:pvx:lh" optname
       "g") genome="$OPTARG" ;;
       "c") chromosome="$OPTARG" ;;
       "w") winSize="${OPTARG}" ;;
-      "s") group="$OPTARG" ;;
+      "a") group="$OPTARG" ;;
       "t") threads="${OPTARG}" ;;
       "p") noplot=1 ;;
       "v") verbose="--verbose" ;;
       "x") step="$OPTARG" ;;
       "l") autodetect=1 ;;
+      "e") end="$OPTARG" ;;
+      "s") start="$OPTARG" ;;
       "h")
         echo "$usage"
         exit 0;
@@ -153,9 +157,19 @@ if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
 
   echo "Making ${winSize} windows of ${chromosome}"
   bedtools makewindows -g wrath_out/size.${chromosome} -w ${winSize} >  wrath_out/beds/windows_${winSize}_${chromosome}.bed || { >&2 echo "Making ${winSize} windows of ${chromosome} failed" ; exit 1; } #need to split the bed file in multiple beds one per chr
+  
+  #check if start and end positions are given
+  if [ ! -z ${start+x} ] && [ ! -z ${end+x} ]; then
+    echo "Start and end positions to subset windows are given"
+    echo "Start: ${start}"
+    echo "End: ${end}"
+    awk -v a="$start" -v b="$end" '$2>a && $3<b {print $0}' wrath_out/beds/windows_${winSize}_${chromosome}.bed > wrath_out/beds/windows_${winSize}_${chromosome}_sub.bed
+    rm wrath_out/beds/windows_${winSize}_${chromosome}.bed
+    mv wrath_out/beds/windows_${winSize}_${chromosome}_sub.bed  wrath_out/beds/windows_${winSize}_${chromosome}.bed
+  fi
 
   rm wrath_out/size.${chromosome}
-
+  
   getbarcodes==1
 
 fi
