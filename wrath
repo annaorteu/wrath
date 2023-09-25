@@ -203,16 +203,16 @@ if [ -z ${step+x} ] || [ ! -z ${getbarcodes+x} ]; then
 #        } else {
 #            print $1"\t"$6"\t"$2"\t"$NF
 #        }
-    }' > wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_$(basename $sample .bam).bed
+    }' > wrath_out/beds/barcodes_${chromosome}_${start}_${end}_$(basename "$group" .txt)_$(basename $sample .bam).bed
   done || { >&2 echo "Getting ${sample} barcodes from ${chromosome} failed" ; exit 1; }
 
   #sort barcodes
   echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome}"
-  cat wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_*bed | 
+  cat wrath_out/beds/barcodes_${chromosome}_${start}_${end}_$(basename "$group" .txt)_*bed | 
   bedtools sort -i - | 
-  bgzip -@ ${threads} > wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz && 
-  tabix wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz && 
-  rm wrath_out/beds/barcodes_${chromosome}_$(basename "$group" .txt)_*bed || 
+  bgzip -@ ${threads} > wrath_out/beds/barcodes_${chromosome}_${start}_${end}_sorted_$(basename "$group" .txt).bed.gz && 
+  tabix wrath_out/beds/barcodes_${chromosome}_${start}_${end}_sorted_$(basename "$group" .txt).bed.gz && 
+  rm wrath_out/beds/barcodes_${chromosome}_${start}_${end}_$(basename "$group" .txt)_*bed || 
   { >&2 echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome} failed" ; exit 1; }
 
   matrix==1
@@ -228,7 +228,7 @@ if [ -z ${step+x} ] || [ ! -z ${matrix+x} ]; then
   mkdir -p wrath_out/matrices
   # compute the jaccard index and save it in a matrix
   echo "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize}"
-  python ${DIR}/big_svs/jaccard_matrix_simplequeue.py  --threads ${threads} -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed -b wrath_out/beds/barcodes_${chromosome}_sorted_$(basename "$group" .txt).bed.gz  -o wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt ${verbose} || 
+  python ${DIR}/big_svs/jaccard_matrix_simplequeue.py  --threads ${threads} -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed -b wrath_out/beds/barcodes_${chromosome}_${start}_${end}_sorted_$(basename "$group" .txt).bed.gz  -o wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_$(basename "$group" .txt).txt ${verbose} || 
   { >&2 echo  "Computing of jaccard index matrix for chromsome ${chromosome} of $(basename "$group" .txt) of window size ${winSize} failed" ; exit 1; }
 
   #edit the output (remove a colon at the end of the line)
