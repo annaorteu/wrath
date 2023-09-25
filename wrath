@@ -39,7 +39,7 @@ if [ $# == 0 ] ; then
     echo "$usage"
     exit 1;
 fi
-while getopts "g:c:w:s:t:pvx:lh" optname
+while getopts "g:c:w:a:t:pvx:le:s:h" optname
   do
     case "$optname" in
       "g") genome="$OPTARG" ;;
