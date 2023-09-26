@@ -242,7 +242,7 @@ if [ -z ${step+x} ] || [ -z ${plot+x} ] || [ -z ${autodetect+x} ] || [ ! -z ${no
 
   #plot the optput
   mkdir -p wrath_out/plots
-  python ${DIR}/big_svs/plot_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -o wrath_out/plots/heatmap_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).png || { >&2 "Plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  python ${DIR}/big_svs/plot_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed -o wrath_out/plots/heatmap_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).png || { >&2 "Plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
 
@@ -268,7 +268,7 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -
   #plot the optput
   mkdir -p wrath_out/plots
   mkdir -p wrath_out/SVs
-  python ${DIR}/big_svs/sv_detection_and_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).csv  -p wrath_out/plots/heatmap_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w ${winSize} -c ${chromosome} || { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  python ${DIR}/big_svs/sv_detection_and_heatmap.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed -o wrath_out/outliers/outliers_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).csv  -p wrath_out/plots/heatmap_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).png -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w ${winSize} -c ${chromosome} || { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
 
@@ -281,6 +281,6 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ ! -z ${noplot+x} ] && [ !
 
   #plot the optput
   mkdir -p wrath_out/SVs
-  python ${DIR}/big_svs/sv_detection.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -o wrath_out/outliers/outliers_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).csv -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
+  python ${DIR}/big_svs/sv_detection.py --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed -o wrath_out/outliers/outliers_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).csv -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w ${winSize} || { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
