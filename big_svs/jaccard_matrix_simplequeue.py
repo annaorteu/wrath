@@ -34,7 +34,7 @@ parser.add_argument("-o", "--outFile", help="Output jaccard matrix file", action
 #other
 parser.add_argument("-t", "--threads", help="Analysis threads", type=int, action = "store", default = 1)
 parser.add_argument("--test", help="Test - runs 10 windows", action='store_true')
-parser.add_argument("--verbose", help="Verbose output.", action = "store_true")
+parser.add_argument("--verbose", help="Verbose output", action = "store_true")
 
 args = parser.parse_args()
 

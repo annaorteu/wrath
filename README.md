@@ -55,7 +55,7 @@ Python:
 - [pysam](https://pysam.readthedocs.io/en/latest/installation.html)
 
 ```bash
-pip install -U numpy seaborn matplotlib pandas scikit-learn
+pip install -U numpy seaborn matplotlib pandas scikit-learn pysam
 ```
 
 R:
