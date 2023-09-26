@@ -20,6 +20,7 @@ parser.add_argument("-p", "--plot", help="Output heatmap plot", action = "store"
 parser.add_argument("-s", "--outFile", help="Output SVs", action = "store")
 parser.add_argument("-w", "--winSize", help="Window size", type=int, action = "store", default = 1)
 parser.add_argument("-c", "--chromosome", help="Chromosome name", type=str, action = "store")
+parser.add_argument("-w", "--windowFile", help="Input genomic windows file", action = "store")
 
 args = parser.parse_args()
 
@@ -30,10 +31,17 @@ args = parser.parse_args()
 
 matrix_file = pd.read_csv(args.matrix, sep=',', lineterminator='\n', header=None)
 outliers_file = pd.read_csv(args.outliers,sep=',', lineterminator='\n')
+window_file = pd.read_csv(args.windowFile, sep='\t', lineterminator='\n', header=None)
 outplot = args.plot
 output = args.outFile
 window_size = args.winSize
 chrom = args.chromosome
+
+
+#########################################################################################################################
+
+#rename axis based on genomic window positions
+matrix_file.rename(index=window_file[1], columns=window_file[1], inplace=True)
 
 #########################################################################################################################
 
