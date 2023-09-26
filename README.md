@@ -2,23 +2,26 @@
 
 <img src="images/wrath_logo.png" alt="logo" width="50%"/>
 
-
 ---
+
 ## Running Wrath for Structural Variant detection
 
 The main script `wrath` runs the main version of *Wrath*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome and produces heatmap plots of barcode sharing. The main pipeline can also automatically detect large SVs. Default window size is 50kbp.
 
-To run this scripts barcodes need to be encoded in the BX tag beforehand. To do that you can use the *barcode_parsing* utility. 
+To run this scripts barcodes need to be encoded in the BX tag beforehand. To do that you can use the *barcode_parsing* utility.
 
 A typical command looks like:
 
 ```bash
+
 wrath.sh -g reference_genome.fa -c chromosome_name  -w 50000  -s list_of_bam_files.txt -t 15
+
 ```
 
 Input options are:
 
 ```
+
 wrath: wrapped analysis of tagged haplotypes
 
 DESCRIPTION:
@@ -39,14 +42,15 @@ OPTIONS:
     -v                verbose (only for the matrix generating step)
 ```
 
-
 ## Requirements
 
 Command line programs:
+
 - [samtools](http://www.htslib.org/)
 - [bedtools](https://bedtools.readthedocs.io/en/latest/)
 
 Python:
+
 - [NumPy](https://numpy.org/)
 - [Seaborn](https://seaborn.pydata.org/installing.html)
 - [matplotlib](https://matplotlib.org/)
@@ -59,6 +63,7 @@ pip install -U numpy seaborn matplotlib pandas scikit-learn pysam
 ```
 
 R:
+
 - [ggplot2](https://ggplot2.tidyverse.org/)
 - [tidyr](https://tidyr.tidyverse.org/)
 - [dplyr](https://dplyr.tidyverse.org/)
@@ -79,13 +84,13 @@ install.packages("nlraa")
 The input necessary is a reference genome  in fasta format and a list of the sample bam files that need to be analysed including their paths.
 
 Like:
+
 ```
 /home/samples/bams/group1/sample1.bam
 /home/samples/bams/group1/sample2.bam
 /home/samples/bams/group2/sample3.bam
 /home/samples/bams/group2/sample4.bam
 ```
-
 
 ## Output
 
@@ -101,6 +106,7 @@ wrath_out/
 ```
 
 ### 1. SVs
+
 Table of automatically detected SVs for a given chromosome (in csv format).
 Columns include: SV id, chromosome name, start position, end position and SV length.
 
@@ -118,6 +124,7 @@ SV_id,chromsome,start,end,length
 ```
 
 ### 2. Plots
+
 Heatmap plot of barcode sharing between windows of a given chromosome. If automatic detection of SVs is used (default option), the lower triangle of the plot will indicate the points where SVs have been detected, while the upper triangle will show barcode sharing between windows.
 
 <img src="example_run/heatmap_10000_Herato1910_all_erato.png" alt="logo" width="100%"/>
@@ -125,8 +132,9 @@ Heatmap plot of barcode sharing between windows of a given chromosome. If automa
 If automatic detection of SVs is disabled, upper and lower triangle will show the same data, barcode sharing between windows.
 
 ### 3. Outliers, matrices and beds
+
 1. Window beds: To calculate barcode sharing between windows, first *Wrath* splits the chromosome in n windows of size m. The coordinates of those windows are stored in a bed file in the directory *beds*.
-2. Barcode beds: Barcodes are extracted from the bam files and their leftmost mapping position stored in a gzipped bed file in *beds*. Tabix index are also created.   
+2. Barcode beds: Barcodes are extracted from the bam files and their leftmost mapping position stored in a gzipped bed file in *beds*. Tabix index are also created.
 3. Matrices: barcode sharing between pairs of windows is calculated and stored in an identity matrix of nxn dimensions. A jaccard index is calculated for each pair of windows:
 
 <img src="https://render.githubusercontent.com/render/math?math=J\left(A,B\right)=\left|A\cap B\right|/\left|A\cup B\right|" width="30%">
