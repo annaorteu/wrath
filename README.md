@@ -6,7 +6,7 @@
 ---
 ## Running Wrath for Structural Variant detection
 
-The main script `wrath.sh` runs the main version of *Wrath*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome and produces heatmap plots of barcode sharing. The main pipeline can also automatically detect large SVs. Default window size is 50kbp.
+The main script `wrath` runs the main version of *Wrath*. The pipeline calculates barcode sharing between windows of a chosen size in a given chromosome and produces heatmap plots of barcode sharing. The main pipeline can also automatically detect large SVs. Default window size is 50kbp.
 
 To run this scripts barcodes need to be encoded in the BX tag beforehand. To do that you can use the *barcode_parsing* utility. 
 
@@ -89,7 +89,7 @@ Like:
 
 ## Output
 
-*WRATH* will create a directory with this structure (when running with default options):
+*Wrath* will create a directory with this structure (when running with default options):
 
 ```
 wrath_out/
