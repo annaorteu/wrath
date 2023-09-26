@@ -50,7 +50,7 @@ for (index in unique(points$x)) {
   group_values <- points[group_indices,]$y
   scaled_group <- scale(na.omit(group_values))
   scaled_df <- tibble(z_score=scaled_group[,1],y=points[group_indices,]$y, x=index, nrow=points[group_indices,]$nrow, ncol=points[group_indices,]$ncol)
-  scaled_full_df <- full_join(scaled_full_df,scaled_df)
+  scaled_full_df <- full_join(scaled_full_df,scaled_df, by=c("z_score", "y", "x", "nrow", "ncol")
 }
 
 
