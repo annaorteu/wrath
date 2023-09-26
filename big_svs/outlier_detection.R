@@ -6,7 +6,7 @@ library(nlraa)
 # Outlier detection by Wrath combines two approaches: z-scores and modelling of the distribution of barcode sharing by distance from the diagonal
 # Outliers are defined as values that fall outside the z-score (absolute) threshold AND outside the prediction bands of the model
 
-zscore_threshold = 10
+zscore_threshold = 2
 predition_level = 0.95
 
 #### PART 1: DATA CLEANING ####
@@ -49,8 +49,8 @@ for (index in unique(points$x)) {
   group_indices <- which(points$x == index)
   group_values <- points[group_indices,]$y
   scaled_group <- scale(na.omit(group_values))
-  scaled_df <- tibble(z_score=scaled_group,y=points[group_indices,]$y, x=index, nrow=points[group_indices,]$nrow, ncol=points[group_indices,]$ncol)
-  scaled_full_df <- rbind(scaled_full_df,scaled_df)
+  scaled_df <- tibble(z_score=scaled_group[,1],y=points[group_indices,]$y, x=index, nrow=points[group_indices,]$nrow, ncol=points[group_indices,]$ncol)
+  scaled_full_df <- full_join(scaled_full_df,scaled_df)
 }
 
 
