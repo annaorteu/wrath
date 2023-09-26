@@ -24,7 +24,7 @@ wrath: wrapped analysis of tagged haplotypes
 DESCRIPTION:
  Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
+wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
 
 OPTIONS:
     -h                show this help text
@@ -52,6 +52,7 @@ Python:
 - [matplotlib](https://matplotlib.org/)
 - [pandas](https://pandas.pydata.org/)
 - [sklearn](https://scikit-learn.org/stable/index.html)
+- [pysam](https://pysam.readthedocs.io/en/latest/installation.html)
 
 ```bash
 pip install -U numpy seaborn matplotlib pandas scikit-learn
