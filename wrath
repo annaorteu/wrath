@@ -280,11 +280,11 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -
   mkdir -p wrath_out/SVs
   python ${DIR}/sv_detection/sv_detection_and_heatmap.py \
   --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
-  -f wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed \
+  -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed \
   -o wrath_out/outliers/outliers_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).csv \
   -p wrath_out/plots/heatmap_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).png \
   -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
-  -w ${winSize} \
+  -f ${winSize} \
   -c ${chromosome} ||
   { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
@@ -303,7 +303,7 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ ! -z ${noplot+x} ] && [ !
   --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
   -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed \
   -o wrath_out/outliers/outliers_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).csv \
-  -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt -w ${winSize} ||
+  -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt ||
   { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi

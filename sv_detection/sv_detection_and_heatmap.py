@@ -18,7 +18,7 @@ parser.add_argument("-m", "--matrix", help="Input matrix", action = "store")
 parser.add_argument("-o", "--outliers", help="Input detected outliers", action = "store")
 parser.add_argument("-p", "--plot", help="Output heatmap plot", action = "store")
 parser.add_argument("-s", "--outFile", help="Output SVs", action = "store")
-parser.add_argument("-w", "--winSize", help="Window size", type=int, action = "store", default = 1)
+parser.add_argument("-f", "--winSize", help="Window size", type=int, action = "store", default = 1)
 parser.add_argument("-c", "--chromosome", help="Chromosome name", type=str, action = "store")
 parser.add_argument("-w", "--windowFile", help="Input genomic windows file", action = "store")
 
