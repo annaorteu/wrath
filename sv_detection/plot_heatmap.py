@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+# Description: This script takes a matrix file and a list of outliers and outputs a heatmap
+# Usage: python plot_heatmap.py -m matrix_file -o output_file -w window_file
+# Input: matrix_file = matrix file with genomic windows as row and column names
+#        window_file = file with genomic window positions
+# Output: output_file = heatmap plot
+# Modules required: argparse, pandas, numpy, matplotlib, seaborn
+# Date: 27 September 2023
+# Author: Anna Orteu
+#########################################################################################################################
 
 import argparse
 import numpy as np

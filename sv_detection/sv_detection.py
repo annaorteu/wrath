@@ -1,4 +1,14 @@
 #!/usr/bin/env python
+# Description: This script takes a matrix file and a list of outliers and outputs a list of SVs
+# Usage: python sv_detection.py -m matrix_file -o outliers_file -s output_file -f window_size
+# Input: matrix_file = matrix file with genomic windows as row and column names
+#        outliers_file = list of outliers with row and column numbers
+#        window_size = size of genomic windows
+# Output: output_file = list of SVs with start and end positions and length in genomic windows
+# Modules required: argparse, pandas, numpy, matplotlib, sklearn
+# Date: 27 September 2023
+# Author: Anna Orteu
+#########################################################################################################################
 
 import argparse
 import numpy as np
@@ -16,7 +26,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-m", "--matrix", help="Input matrix", action = "store")
 parser.add_argument("-o", "--outliers", help="Input detected outliers", action = "store")
 parser.add_argument("-s", "--outFile", help="Output SVs", action = "store")
-parser.add_argument("-w", "--winSize", help="Window size", type=int, action = "store", default = 1)
+parser.add_argument("-f", "--winSize", help="Window size", type=int, action = "store", default = 1)
 
 args = parser.parse_args()
 

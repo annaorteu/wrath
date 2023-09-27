@@ -1,4 +1,17 @@
 #!/usr/bin/env python
+# Description: This script takes a matrix file and a list of outliers and outputs a list of SVs and a heatmap
+# Usage: python sv_detection_and_heatmap.py -m matrix_file -o outliers_file -s output_file -f window_size -c chromosome -w window_file -p plot_file
+# Input: matrix_file = matrix file with genomic windows as row and column names
+#        outliers_file = list of outliers with row and column numbers
+#        window_size = size of genomic windows
+#        chromosome = chromosome name
+#        window_file = file with genomic window positions
+# Output: output_file = list of SVs with start and end positions and length in genomic windows
+#         plot_file = heatmap plot
+# Modules required: argparse, pandas, numpy, matplotlib, seaborn, sklearn
+# Date: 27 September 2023
+# Author: Anna Orteu
+#########################################################################################################################
 
 import argparse
 import numpy as np

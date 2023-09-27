@@ -1,4 +1,14 @@
 #!/usr/bin/env python
+# Description: This script takes two matrix files and outputs a heatmap with each matrix ploteed in a triangle
+# Usage: python plot_2matrices_together.py -m1 matrix_file1 -m2 matrix_file2 -o output_file -w window_file
+# Input: matrix_file1 = matrix file with genomic windows as row and column names
+#        matrix_file2 = matrix file with genomic windows as row and column names
+#        window_file = file with genomic window positions
+# Output: output_file = heatmap plot
+# Modules required: argparse, pandas, numpy, matplotlib, seaborn
+# Date: 27 September 2023
+# Author: Anna Orteu
+#########################################################################################################################
 
 import argparse
 import numpy as np

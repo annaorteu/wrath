@@ -1,7 +1,15 @@
-library(ggplot2)
-library(tidyr)
-library(dplyr)
-library(nlraa)
+# Description: This script takes a matrix of barcode sharing and detects outliers by calculating z-scores and prediction bands.
+# Input: matrix of barcode sharing
+# Output: plot of barcode sharing, outliers list
+# Usage: Rscript outlier_detection.R <input_matrix> <output_prefix>
+# Example: Rscript outlier_detection.R ../data/barcode_sharing_matrix.csv ../results/outlier_detection
+# Dependencies: ggplot2, tidyr, dplyr, nlraa
+# Author: Anna Orteu
+
+library(ggplot2, quietly = TRUE)
+library(tidyr, quietly = TRUE)
+library(dplyr, quietly = TRUE)
+library(nlraa, quietly = TRUE)
 
 # Outlier detection by Wrath combines two approaches: z-scores and modelling of the distribution of barcode sharing by distance from the diagonal
 # Outliers are defined as values that fall outside the z-score (absolute) threshold AND outside the prediction bands of the model
@@ -69,7 +77,7 @@ names(fm.Theoph.prd.bnd)[3:4] <- c("Qbottom", "Qtop")
 fm.Theoph.prd.bnd.dat <- cbind(points, fm.Theoph.prd.bnd)
 
 # merge dataset containing z scores and model estimates
-dataset = left_join(scaled_full_df, fm.Theoph.prd.bnd.dat)
+dataset = left_join(scaled_full_df, fm.Theoph.prd.bnd.dat, by=c("y"="value", "nrow", "ncol", "x"="index"))
 dataset = dataset %>%  mutate(abs_z=abs(z_score))
 
 

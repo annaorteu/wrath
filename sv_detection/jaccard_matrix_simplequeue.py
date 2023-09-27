@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+# Description: This script takes a barcode file (bed) and a list of windows (bed) and outputs a jaccard matrix of barcode sharing between windows
+# Usage: python jaccard_matrix.py -w window_file -b barcode_file -o output_file -t threads
+# Input: window_file = file with genomic window positions
+#        barcode_file = file with barcodes and positions
+# Output: output_file = jaccard matrix
+# Modules required: argparse, sys, gzip, random, pysam, math, numpy, pandas
+# Date: 27 September 2023
+# Author: Anna Orteu
+#########################################################################################################################
 
 import argparse, sys, gzip, random, pysam, math
 import numpy as np
