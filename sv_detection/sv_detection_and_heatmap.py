@@ -59,19 +59,45 @@ d={'mincol':groups.min(['ncol'])['ncol'], 'maxcol':groups.max(['ncol'])['ncol'],
 breakPoints = pd.DataFrame(data=d)
 
 #plot heatmap in half a triangle and the detected outliers in the other
-#first define the axis labels. We only want 100 ticks per axis
-# yticks=matrix_file.columns.values*10000
-# yticks=yticks[0::round(yticks.shape[0]/100)]
-#
-# xticks=matrix_file.index.values*10000
-# xticks[0::round(xticks.shape[0]/100)]
+sns.set(font_scale=3)
 
-#then plot and add the outliers
-heatmap_plot = sns.heatmap(np.log(matrix_file+0.0001)*100, cmap="YlGnBu", square=True)
+data = np.log(matrix_file + 0.0001) * 100 #transform the data to log scale and multiply by 100 to get a percentage
+
+heatmap_plot = sns.heatmap(data, cmap="YlGnBu", square=True, cbar_kws={'label': 'Barcode sharing %', 'shrink': 0.5})
 heatmap_plot.scatter(x=breakPoints['minrow'], y=breakPoints['mincol'], color='k')
 heatmap_plot.scatter(x=breakPoints['maxrow']+1, y=breakPoints['maxcol']+1, color='m')
 
+# Calculate appropriate tick locations and labels for the y-axis (rows)
+num_ticks_y = round(len(data.index) / 60)  # Adjust the number of desired ticks
+tick_locs_y = np.around(np.linspace(0, len(data.index) - 1, num_ticks_y)).astype(int)
+tick_labels_y = data.index[tick_locs_y] # get the labels from the index (chromosome positions)
+
+heatmap_plot.set_yticks(tick_locs_y)
+heatmap_plot.set_yticklabels(tick_labels_y)
+
+# Calculate appropriate tick locations and labels for the x-axis (columns)
+num_ticks_x = round(len(data.columns) / 60)  # Adjust the number of desired ticks
+tick_locs_x = np.around(np.linspace(0, len(data.columns) - 1, num_ticks_x)).astype(int)
+tick_labels_x = data.columns[tick_locs_x] # get the labels from the index (chromosome positions)
+
+heatmap_plot.set_xticks(tick_locs_x) 
+heatmap_plot.set_xticklabels(tick_labels_x)
+
+# Calculate appropriate tick locations and labels for the colorbar
+cbar = heatmap_plot.collections[0].colorbar
+num_ticks = 2  # Adjust the number of desired ticks
+
+# Ensure that tick_locs is a 1D array
+tick_locs = np.linspace(np.nanmin(data.to_numpy()), np.nanmax(data.to_numpy()), num_ticks)
+
+# Transform tick_locs back to the original scale
+
+cbar.set_ticks(tick_locs)
+cbar.set_ticklabels(['0','100'])
+
+# Plot the figure
 fig = heatmap_plot.get_figure()
+fig.figure.axes[-1].yaxis.label.set_size(50)
 fig.savefig(outplot)
 
 #calculate lengths of svs and sort them by length
