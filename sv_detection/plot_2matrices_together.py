@@ -46,8 +46,44 @@ matrix_file3.rename(index=window_file[1], columns=window_file[1], inplace=True)
 #########################################################################################################################
 
 #plot and save output
-plt.rcParams['figure.figsize'] = [30, 30] #set figure size
+plt.rcParams['figure.figsize'] = [30, 30]
+sns.set(font_scale=3)
 
-heatmap_plot = sns.heatmap(np.log(matrix_file3+0.0001)*100, cmap="YlGnBu", square=True)
+data = np.log(matrix_file3 + 0.0001) * 100
+
+heatmap_plot = sns.heatmap(data, cmap="YlGnBu", square=True, cbar_kws={'label': 'Barcode sharing %', 'shrink': 0.5})
+
+
+# Calculate appropriate tick locations and labels for the y-axis (rows)
+num_ticks_y = round(len(data.index) / 60)  # Adjust the number of desired ticks
+tick_locs_y = np.around(np.linspace(0, len(data.index) - 1, num_ticks_y)).astype(int)
+tick_labels_y = data.index[tick_locs_y]
+
+heatmap_plot.set_yticks(tick_locs_y)
+heatmap_plot.set_yticklabels(tick_labels_y)
+
+# Calculate appropriate tick locations and labels for the x-axis (columns)
+num_ticks_x = round(len(data.columns) / 60)  # Adjust the number of desired ticks
+tick_locs_x = np.around(np.linspace(0, len(data.columns) - 1, num_ticks_x)).astype(int)
+tick_labels_x = data.columns[tick_locs_x]
+
+heatmap_plot.set_xticks(tick_locs_x)
+heatmap_plot.set_xticklabels(tick_labels_x)
+
+# Calculate appropriate tick locations and labels for the colorbar
+cbar = heatmap_plot.collections[0].colorbar
+num_ticks = 2  # Adjust the number of desired ticks
+
+# Ensure that tick_locs is a 1D array
+tick_locs = np.linspace(np.nanmin(data.to_numpy()), np.nanmax(data.to_numpy()), num_ticks)
+
+# Transform tick_locs back to the original scale
+
+cbar.set_ticks(tick_locs)
+cbar.set_ticklabels(['0','100'])
+
+# Plot the figure
 fig = heatmap_plot.get_figure()
+fig.figure.axes[-1].yaxis.label.set_size(50)
+fig.figure.axes[-1].tick_params(labelsize=40)
 fig.savefig(output)
