@@ -77,7 +77,7 @@ names(fm.Theoph.prd.bnd)[3:4] <- c("Qbottom", "Qtop")
 fm.Theoph.prd.bnd.dat <- cbind(points, fm.Theoph.prd.bnd)
 
 # merge dataset containing z scores and model estimates
-dataset = left_join(scaled_full_df, fm.Theoph.prd.bnd.dat, by=c("y"="value", "nrow", "ncol", "x"="index"))
+dataset = left_join(scaled_full_df, fm.Theoph.prd.bnd.dat, by= c("y", "x", "nrow", "ncol"))
 dataset = dataset %>%  mutate(abs_z=abs(z_score))
 
 
