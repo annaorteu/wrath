@@ -6,10 +6,10 @@
 # Dependencies: ggplot2, tidyr, dplyr, nlraa
 # Author: Anna Orteu
 
-library(ggplot2, quietly = TRUE)
-library(tidyr, quietly = TRUE)
-library(dplyr, quietly = TRUE)
-library(nlraa, quietly = TRUE)
+library(ggplot2, quietly = TRUE, warn.conflicts = FALSE)
+library(tidyr, quietly = TRUE, warn.conflicts = FALSE)
+library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
+library(nlraa, quietly = TRUE, warn.conflicts = FALSE)
 
 # Outlier detection by Wrath combines two approaches: z-scores and modelling of the distribution of barcode sharing by distance from the diagonal
 # Outliers are defined as values that fall outside the z-score (absolute) threshold AND outside the prediction bands of the model
