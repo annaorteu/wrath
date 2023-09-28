@@ -127,7 +127,7 @@ SV_id,chromsome,start,end,length
 
 ### 2. Plots
 
-####Chromosome plots and SV detection:
+#### Chromosome plots and SV detection:
 
 Heatmap plot of barcode sharing between windows of a given chromosome. If automatic detection of SVs is used, the lower triangle of the plot will indicate the points where SVs have been detected, while the upper triangle will show barcode sharing between windows.
 
@@ -135,7 +135,7 @@ Heatmap plot of barcode sharing between windows of a given chromosome. If automa
 
 If automatic detection of SVs is not enabled, the upper triangle will show barcode sharing between windows and lower triangle will be empty.
 
-####Comparison of populations:
+#### Comparison of populations:
 
 If comparing two populations that differ in a structural variant, it can be useful to plot the barcode sharing between windows of the two populations. This can be done by using the script [sv_detection/plot_2matrices_tegether.py](sv_detection/plot_2matrices_tegether.py) and providing a list of bam files for each population. The plot will show the barcode sharing between windows of each population, one in the upper triangle and the other in the lower triangle.
 
@@ -149,13 +149,13 @@ If comparing two populations that differ in a structural variant, it can be usef
 
 3. **Matrices:** Barcode sharing between pairs of windows is calculated and stored in an identity matrix of nxn dimensions. A Jaccard index is calculated for each pair of windows:
 
-   \[J(A,B) = \frac{|A \cap B|}{|A \cup B|}\]
+    <img src="https://render.githubusercontent.com/render/math?math=J\left(A,B\right)=\left|A\cap B\right|/\left|A\cup B\right|" width="30%">
 
    Where J is the Jaccard distance, and A and B are windows 1 and 2, respectively.
 
-4. **Outliers:** We calculate and store the distance of each comparison to the diagonal. Then, using this distance and the Jaccard index value of the comparison, we calculate z scores and, separately, we fit a double exponential decay model, such that:
+1. **Outliers:** We calculate and store the distance of each comparison to the diagonal. Then, using this distance and the Jaccard index value of the comparison, we calculate z scores and, separately, we fit a double exponential decay model, such that:
 
-   \[y \sim e^{(a + b \cdot e^{(x \cdot (-c))})}\]
+    <img src="https://render.githubusercontent.com/render/math?math=y\ ~\ e^{(a%2Bb\ast\e^{(x\ast(-c))})}" width="25%">
 
    The model is fit, and 95% prediction bands are calculated from it such that:
 
