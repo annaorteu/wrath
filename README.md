@@ -5,7 +5,7 @@
 
 ---
 
-Wrath is a program for the visualisation and identification of candidate structural variants (SVs) from linked read data. Wrath calculates barcode sharing between windows of a given chromosome and produces heatmap plots that are useful to explore the data and identify candidate SBs. The pipeline can also automatically detect large SVs by using a double approach of z-scores threasholds and prediction bands from modelling of the data.
+*Wrath* is a program for the visualisation and identification of candidate structural variants (SVs) from linked read data. Wrath calculates barcode sharing between windows of a given chromosome and produces heatmap plots that are useful to explore the data and identify candidate SBs. The pipeline can also automatically detect large SVs by using a double approach of z-scores threasholds and prediction bands from modelling of the data.
 
 <!-- omit in toc -->
 ## On this page
@@ -20,7 +20,7 @@ Wrath is a program for the visualisation and identification of candidate structu
     - [Comparison of populations:](#comparison-of-populations)
   - [3. Outliers, Matrices, and Beds](#3-outliers-matrices-and-beds)
 - [Running *Wrath* on multiple chromosomes](#running-wrath-on-multiple-chromosomes)
-- [Citing Wrath](#citing-wrath)
+- [Citing *Wrath*](#citing-wrath)
 
 ## Running Wrath for Structural Variant detection
 
@@ -187,9 +187,9 @@ Several values are stored for each outlier: row number, column number, jaccard d
 
 The easiest way to run *Wrath* on multiple chromosomes is to run in parallely. If running on a cluster and using a shceduling system such as SLURM, an array can be used to run a job for each chromosome. An example is found in [example array](example_run/example_wrath_slurm_array.sh).
 
-## Citing Wrath
+## Citing *Wrath*
 
-If you use Wrath please cite the our preprint on bioRxiv:
+If you use *Wrath* please cite the our preprint on bioRxiv:
 
 Transposable element insertions are associated with Batesian mimicry in the pantropical butterfly Hypolimnas misippus
 Anna Orteu, Marek Kucka, Eunice Katili, Charo Ngumbao, Ian J. Gordon, Ivy Ng’iru, Eva van der Heijden, Gerard Talavera, Ian A. Warren, Steve Collins, Richard H. ffrench-Constant, Dino J. Martins, Yingguang Frank Chan, Chris D. Jiggins, Simon H. Martin
