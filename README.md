@@ -64,30 +64,32 @@ OPTIONS:
 
 ## Requirements
 
+Versions shown are the ones used for development. Other versions might work but have not been tested.
+
 Command line programs:
 
-- [samtools](http://www.htslib.org/)
-- [bedtools](https://bedtools.readthedocs.io/en/latest/)
+- [samtools v1.9](http://www.htslib.org/)
+- [bedtools v2.20.1](https://bedtools.readthedocs.io/en/latest/)
 
-Python:
+Python (version 3.6 or higher):
 
-- [NumPy](https://numpy.org/)
-- [Seaborn](https://seaborn.pydata.org/installing.html)
-- [matplotlib](https://matplotlib.org/)
-- [pandas](https://pandas.pydata.org/)
-- [sklearn](https://scikit-learn.org/stable/index.html)
-- [pysam](https://pysam.readthedocs.io/en/latest/installation.html)
+- [NumPy v1.26.0](https://numpy.org/)
+- [Seaborn v0.12.2](https://seaborn.pydata.org/installing.html)
+- [matplotlib v3.8.0](https://matplotlib.org/)
+- [pandas v2.1.1](https://pandas.pydata.org/)
+- [sklearn v1.3.1](https://scikit-learn.org/stable/index.html)
+- [pysam v0.21.0](https://pysam.readthedocs.io/en/latest/installation.html)
 
 ```bash
 pip install -U numpy seaborn matplotlib pandas scikit-learn pysam
 ```
 
-R:
+R (version 4.0.3 or higher):
 
-- [ggplot2](https://ggplot2.tidyverse.org/)
-- [tidyr](https://tidyr.tidyverse.org/)
-- [dplyr](https://dplyr.tidyverse.org/)
-- [nlraa](https://github.com/femiguez/nlraa)
+- [ggplot2 v3.3.3](https://ggplot2.tidyverse.org/)
+- [tidyr v1.1.3](https://tidyr.tidyverse.org/)
+- [dplyr v1.0.5](https://dplyr.tidyverse.org/)
+- [nlraa v1.2](https://github.com/femiguez/nlraa)
 
 In R, run
 
