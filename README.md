@@ -1,8 +1,24 @@
-# Wrath: WRapped Analysis of Tagged Haplotypes
+<font size=6>**Wrath: WRapped Analysis of Tagged Haplotypes**</font>
 
 <img src="images/wrath_logo.png" alt="logo" width="50%"/>
 
 ---
+
+Wrath is a program for the visualisation and identification of candidate structural variants (SVs) from linked read data. Wrath calculates barcode sharing between windows of a given chromosome and produces heatmap plots that are useful to explore the data and identify candidate SBs. The pipeline can also automatically detect large SVs by using a double approach of z-scores threasholds and prediction bands from modelling of the data.
+
+<font size=5>**Table of Contents**</font>
+
+- [Running Wrath for Structural Variant detection](#running-wrath-for-structural-variant-detection)
+- [Requirements](#requirements)
+- [Input files](#input-files)
+- [Output](#output)
+  - [1. SVs](#1-svs)
+  - [2. Plots](#2-plots)
+    - [Chromosome plots and SV detection:](#chromosome-plots-and-sv-detection)
+    - [Comparison of populations:](#comparison-of-populations)
+  - [3. Outliers, Matrices, and Beds](#3-outliers-matrices-and-beds)
+- [Running *Wrath* on multiple chromosomes](#running-wrath-on-multiple-chromosomes)
+- [Citing Wrath](#citing-wrath)
 
 ## Running Wrath for Structural Variant detection
 
@@ -168,3 +184,11 @@ Several values are stored for each outlier: row number, column number, jaccard d
 ## Running *Wrath* on multiple chromosomes
 
 The easiest way to run *Wrath* on multiple chromosomes is to run in parallely. If running on a cluster and using a shceduling system such as SLURM, an array can be used to run a job for each chromosome. An example is found in [example array](example_run/example_wrath_slurm_array.sh).
+
+## Citing Wrath
+
+If you use Wrath please cite the our preprint on bioRxiv:
+
+Transposable element insertions are associated with Batesian mimicry in the pantropical butterfly Hypolimnas misippus
+Anna Orteu, Marek Kucka, Eunice Katili, Charo Ngumbao, Ian J. Gordon, Ivy Ng’iru, Eva van der Heijden, Gerard Talavera, Ian A. Warren, Steve Collins, Richard H. ffrench-Constant, Dino J. Martins, Yingguang Frank Chan, Chris D. Jiggins, Simon H. Martin
+bioRxiv 2023.07.10.548380; doi: https://doi.org/10.1101/2023.07.10.548380
