@@ -14,32 +14,34 @@ A typical command looks like:
 
 ```bash
 
-wrath.sh -g reference_genome.fa -c chromosome_name  -w 50000  -s list_of_bam_files.txt -t 15
+wrath -g reference_genome.fa -c chromosome_name  -w 50000  -s list_of_bam_files.txt -t 15
 
 ```
 
 Input options are:
 
-```
+```{bash}
 
-wrath: wrapped analysis of tagged haplotypes
+Wrath: wrapped analysis of tagged haplotypes
 
 DESCRIPTION:
  Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-s FILELIST] [-t THERADS] [-p] [-v] [-x STEP] [-l]
+wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-a FILELIST] [-t THREADS] [-p] [-v] [-x STEP] [-l] [-s START] [-e END]
 
-OPTIONS:
-    -h                show this help text
-    -g FASTAFILE      reference genome
-    -c CHROMOSOMENAME chromosome
-    -w WINDOWSIZE     window size. Default 50kbp
-    -s FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
-    -t THERADS        threads to use. Default 1.
-    -p                skip plotting the heatmap
-    -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers or plot
-    -l                automatic detection of SVs
-    -v                verbose (only for the matrix generating step)
+OPTIONS: 
+  -h                show this help text
+  -g FASTAFILE      reference genome
+  -c CHROMOSOMENAME chromosome
+  -w WINDOWSIZE     window size
+  -a FILELIST       list of bam files with paths of the individuals of the population/phenotype of interest
+  -t THREADS        threads to use
+  -p                skip plotting the heatmap
+  -x STEP           start from a given step. Note that this only works if filenames match those expected by wrath. Possible step options are: makewindows, getbarcodes, matrix, outliers (only if -l given) or plot
+  -l                automatic detection of SVs
+  -v                verbose (only for the matrix generating step)
+  -s START          start position to subset windows
+  -e END            end position to subset windows
 ```
 
 ## Requirements
@@ -85,7 +87,7 @@ The input necessary is a reference genome  in fasta format and a list of the sam
 
 Like:
 
-```
+```{bash}
 /home/samples/bams/group1/sample1.bam
 /home/samples/bams/group1/sample2.bam
 /home/samples/bams/group2/sample3.bam
@@ -96,7 +98,7 @@ Like:
 
 *Wrath* will create a directory with this structure (when running with default options):
 
-```
+```{bash}
 wrath_out/
 ├── beds
 ├── matrices
@@ -110,7 +112,7 @@ wrath_out/
 Table of automatically detected SVs for a given chromosome (in csv format).
 Columns include: SV id, chromosome name, start position, end position and SV length.
 
-```
+```{bash}
 SV_id,chromsome,start,end,length
 5,Herato1910,10000,3170000,3160000
 15,Herato1910,540000,2160000,1620000
@@ -125,31 +127,43 @@ SV_id,chromsome,start,end,length
 
 ### 2. Plots
 
-Heatmap plot of barcode sharing between windows of a given chromosome. If automatic detection of SVs is used (default option), the lower triangle of the plot will indicate the points where SVs have been detected, while the upper triangle will show barcode sharing between windows.
+####Chromosome plots and SV detection:
 
-<img src="example_run/heatmap_10000_Herato1910_all_erato.png" alt="logo" width="100%"/>
+Heatmap plot of barcode sharing between windows of a given chromosome. If automatic detection of SVs is used, the lower triangle of the plot will indicate the points where SVs have been detected, while the upper triangle will show barcode sharing between windows.
 
-If automatic detection of SVs is disabled, upper and lower triangle will show the same data, barcode sharing between windows.
+![example_chromosome](example_run/heatmap_50000_Hmel218003o_1_16450716_malleti.png)
 
-### 3. Outliers, matrices and beds
+If automatic detection of SVs is not enabled, the upper triangle will show barcode sharing between windows and lower triangle will be empty.
 
-1. Window beds: To calculate barcode sharing between windows, first *Wrath* splits the chromosome in n windows of size m. The coordinates of those windows are stored in a bed file in the directory *beds*.
-2. Barcode beds: Barcodes are extracted from the bam files and their leftmost mapping position stored in a gzipped bed file in *beds*. Tabix index are also created.
-3. Matrices: barcode sharing between pairs of windows is calculated and stored in an identity matrix of nxn dimensions. A jaccard index is calculated for each pair of windows:
+####Comparison of populations:
 
-<img src="https://render.githubusercontent.com/render/math?math=J\left(A,B\right)=\left|A\cap B\right|/\left|A\cup B\right|" width="30%">
+If comparing two populations that differ in a structural variant, it can be useful to plot the barcode sharing between windows of the two populations. This can be done by using the script [sv_detection/plot_2matrices_tegether.py](sv_detection/plot_2matrices_tegether.py) and providing a list of bam files for each population. The plot will show the barcode sharing between windows of each population, one in the upper triangle and the other in the lower triangle.
 
-Where J is the Jaccard distance, and A and B are windows 1 and and 2 respectively.
+![two_populations](example_run/two_populations.png)
 
-4. Outliers: we calculate and store the distance of each comparison to the diagonal. Then using this distance and the jaccard index value of the comparison, we fit a double exponential decay model, such that:
+### 3. Outliers, Matrices, and Beds
 
-<img src="https://render.githubusercontent.com/render/math?math=y\ ~\ e^{(a%2Bb\ast\e^{(x\ast(-c))})}" width="25%">
+1. **Window Beds:** To calculate barcode sharing between windows, first *Wrath* splits the chromosome into n windows of size m. The coordinates of those windows are stored in a bed file in the directory *beds*.
 
-The model is fit and 95% prediction bands are calculated from it such that:
+2. **Barcode Beds:** Barcodes are extracted from the bam files, and their leftmost mapping position is stored in a gzipped bed file in *beds*. Tabix indexes are also created.
+
+3. **Matrices:** Barcode sharing between pairs of windows is calculated and stored in an identity matrix of nxn dimensions. A Jaccard index is calculated for each pair of windows:
+
+   \[J(A,B) = \frac{|A \cap B|}{|A \cup B|}\]
+
+   Where J is the Jaccard distance, and A and B are windows 1 and 2, respectively.
+
+4. **Outliers:** We calculate and store the distance of each comparison to the diagonal. Then, using this distance and the Jaccard index value of the comparison, we calculate z scores and, separately, we fit a double exponential decay model, such that:
+
+   \[y \sim e^{(a + b \cdot e^{(x \cdot (-c))})}\]
+
+   The model is fit, and 95% prediction bands are calculated from it such that:
 
 ![model_fit](images/model_fit.png)
 
-Any points above or below the prediction bands are defined as outliers and stored in the *outliers* directory. Several values are stored for each outlier: row number, column number, jaccard distance, y estimate of the model, estimated error, 2.5 quantile, 97.5 quantile and a definition of whether it is an 'upper' or 'lower' outlier.
+Any points outside the z score threshold (2 by default) **and** above or below the prediction bands are defined as outliers and stored in the *outliers* directory. Z score threashold and predition bands can be changed in the script *outliers.R*.
+
+Several values are stored for each outlier: row number, column number, jaccard distance, y estimate of the model, estimated error, 2.5 quantile, 97.5 quantile and a definition of whether it is an 'upper' or 'lower' outlier.
 
 ## Running *Wrath* on multiple chromosomes
 

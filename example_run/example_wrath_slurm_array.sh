@@ -11,11 +11,19 @@
 #SBATCH -A JIGGINS-SL3-CPU
 #SBATCH --array=1-195
 
-chr=$(sed -n "$SLURM_ARRAY_TASK_ID"p Hera_chr)
-
 #load the necessary modules
 module load bedtools
-module load python-3.6.1-gcc-5.4.0-23fr5u4
-module load R/4.0.3
+module load python-3.6.1-gcc-5.4.0-23fr5u4 #for slurm
+module load R/4.0.3 
+source ~/.bashrc
 
-~/wrath/wrath -g ~/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa -c ${chr}  -w 10000  -s all_erato.txt -t 15
+#set variables
+chr=$(sed -n "$SLURM_ARRAY_TASK_ID"p Hera_chr)
+winSize=50000
+threads=10
+start=700000
+end=850000
+group=malleti.txt
+
+#run wrath
+wrath -g ~/genomes/Hmel/Hmel2.5.fa -c ${chr}  -w ${winSize}  -a ${group} -t ${threads} -l -s ${start} -e ${end} 
