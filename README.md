@@ -149,7 +149,7 @@ SV_id,chromsome,start,end,length
 
 Heatmap plot of barcode sharing between windows of a given chromosome. If automatic detection of SVs is used, the lower triangle of the plot will indicate the points where SVs have been detected, while the upper triangle will show barcode sharing between windows.
 
-![example_chromosome](example_run/heatmap_50000_Hmel218003o_1_16450716_malleti.png)
+![example_chromosome](example_run/heatmap_10000_Herato0204_1_1591071_all_erato.png)
 
 If automatic detection of SVs is not enabled, the upper triangle will show barcode sharing between windows and lower triangle will be empty.
 
