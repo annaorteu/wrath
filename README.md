@@ -32,7 +32,7 @@ A typical command looks like:
 
 ```bash
 
-wrath -g reference_genome.fa -c chromosome_name  -w 50000  -s list_of_bam_files.txt -t 15
+wrath -g reference_genome.fa -c chromosome_name  -w 50000  -a list_of_bam_files.txt -t 15
 
 ```
 

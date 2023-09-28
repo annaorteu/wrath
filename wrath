@@ -15,7 +15,7 @@ ${bold}Wrath: wrapped analysis of tagged haplotypes
 ${bold}DESCRIPTION:
 ${normal} Program produces a jaccard matrix camparing the barcode content between all pairs windows whithin a chromosome.
 
-wrath.sh [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-a FILELIST] [-t THREADS] [-p] [-v] [-x STEP] [-l] [-s START] [-e END]
+wrath [-h] [-g FASTAFILE] [-c CHROMOSOMENAME] [-w WINDOWSIZE] [-a FILELIST] [-t THREADS] [-p] [-v] [-x STEP] [-l] [-s START] [-e END]
 
 ${bold}OPTIONS: ${normal}
   -h                show this help text
