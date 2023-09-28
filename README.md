@@ -1,4 +1,5 @@
-<font size=6>**Wrath: WRapped Analysis of Tagged Haplotypes**</font>
+<!-- omit in toc -->
+# Wrath: WRapped Analysis of Tagged Haplotypes
 
 <img src="images/wrath_logo.png" alt="logo" width="50%"/>
 
@@ -6,7 +7,8 @@
 
 Wrath is a program for the visualisation and identification of candidate structural variants (SVs) from linked read data. Wrath calculates barcode sharing between windows of a given chromosome and produces heatmap plots that are useful to explore the data and identify candidate SBs. The pipeline can also automatically detect large SVs by using a double approach of z-scores threasholds and prediction bands from modelling of the data.
 
-<font size=5>**Table of Contents**</font>
+<!-- omit in toc -->
+## On this page
 
 - [Running Wrath for Structural Variant detection](#running-wrath-for-structural-variant-detection)
 - [Requirements](#requirements)
@@ -192,3 +194,5 @@ If you use Wrath please cite the our preprint on bioRxiv:
 Transposable element insertions are associated with Batesian mimicry in the pantropical butterfly Hypolimnas misippus
 Anna Orteu, Marek Kucka, Eunice Katili, Charo Ngumbao, Ian J. Gordon, Ivy Ng’iru, Eva van der Heijden, Gerard Talavera, Ian A. Warren, Steve Collins, Richard H. ffrench-Constant, Dino J. Martins, Yingguang Frank Chan, Chris D. Jiggins, Simon H. Martin
 bioRxiv 2023.07.10.548380; doi: https://doi.org/10.1101/2023.07.10.548380
+
+[def]: #wrath-wrapped-analysis-of-tagged-haplotypes-unlisted-unnumbered
