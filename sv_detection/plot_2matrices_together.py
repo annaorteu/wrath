@@ -63,21 +63,24 @@ data = np.log(matrix_file3 + 0.0001) * 100
 
 heatmap_plot = sns.heatmap(data, cmap="YlGnBu", square=True, cbar_kws={'label': 'Barcode sharing %', 'shrink': 0.5})
 
-
 # Calculate appropriate tick locations and labels for the y-axis (rows)
 num_ticks_y = round(len(data.index) / 60)  # Adjust the number of desired ticks
+if num_ticks_y <= 10: #if there are less than 10 ticks, set the number of ticks to 10
+    num_ticks_y = 10
 tick_locs_y = np.around(np.linspace(0, len(data.index) - 1, num_ticks_y)).astype(int)
-tick_labels_y = data.index[tick_locs_y]
+tick_labels_y = data.index[tick_locs_y] # get the labels from the index (chromosome positions)
 
 heatmap_plot.set_yticks(tick_locs_y)
 heatmap_plot.set_yticklabels(tick_labels_y)
 
 # Calculate appropriate tick locations and labels for the x-axis (columns)
 num_ticks_x = round(len(data.columns) / 60)  # Adjust the number of desired ticks
+if num_ticks_x <= 10: #if there are less than 10 ticks, set the number of ticks to 10
+    num_ticks_x = 10
 tick_locs_x = np.around(np.linspace(0, len(data.columns) - 1, num_ticks_x)).astype(int)
-tick_labels_x = data.columns[tick_locs_x]
+tick_labels_x = data.columns[tick_locs_x] # get the labels from the index (chromosome positions)
 
-heatmap_plot.set_xticks(tick_locs_x)
+heatmap_plot.set_xticks(tick_locs_x) 
 heatmap_plot.set_xticklabels(tick_labels_x)
 
 # Calculate appropriate tick locations and labels for the colorbar
