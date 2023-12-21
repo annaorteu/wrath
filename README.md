@@ -176,7 +176,7 @@ $$ J(A, B) = \frac{|A \cap B|}{|A \cup B|} $$
 
 1. **Outliers:** We calculate and store the distance of each comparison to the diagonal. Then, using this distance and the Jaccard index value of the comparison, we calculate z scores and, separately, we fit a double exponential decay model, such that:
 
-$$ y \sim e^{\left(a + b \cdot e^{\left(x \cdot (-c)\right)}\right)} $$
+$$ y \sim e^{(a + b \cdot e^{(x \cdot (-c))})} $$
 
    The model is fit, and 95% prediction bands are calculated from it such that:
 
