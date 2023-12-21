@@ -19,6 +19,7 @@
     - [Chromosome plots and SV detection:](#chromosome-plots-and-sv-detection)
     - [Comparison of populations:](#comparison-of-populations)
   - [3. Outliers, Matrices, and Beds](#3-outliers-matrices-and-beds)
+- [Test example run](#test-example-run)
 - [Running *Wrath* on multiple chromosomes](#running-wrath-on-multiple-chromosomes)
 - [Citing *Wrath*](#citing-wrath)
 
@@ -184,6 +185,11 @@ If comparing two populations that differ in a structural variant, it can be usef
 Any points outside the z score threshold (2 by default) **and** above or below the prediction bands are defined as outliers and stored in the *outliers* directory. Z score threashold and predition bands can be changed in the script *outliers.R*.
 
 Several values are stored for each outlier: row number, column number, jaccard distance, y estimate of the model, estimated error, 2.5 quantile, 97.5 quantile and a definition of whether it is an 'upper' or 'lower' outlier.
+
+## Test Example Run
+
+To test Wrath's installation and prerequisites, there is a complete example test set in [example_run/complete_heliconius_example](example_run/complete_heliconius_example). Follow the README to run the example. 
+
 
 ## Running *Wrath* on multiple chromosomes
 
