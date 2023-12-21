@@ -1,0 +1,174 @@
+running wrath_out with options:
+
+genome = /home/af658/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa
+chromosome = Herato0204
+window size = 10000
+sample bams file = samples.txt
+threads = 15
+
+
+Getting chromsome sizes
+Getting Herato0204 size from genome file
+Start and end positions to subset windows are not given
+Making 10000 windows of Herato0204 from 1 to 1591071
+Getting bams/CAM016046.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016047.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+[E::hts_open_format] Failed to open file bams/CAM016047.lativitta.Herato0204.rmd.bam
+samtools view: failed to open "bams/CAM016047.lativitta.Herato0204.rmd.bam" for reading: No such file or directory
+Getting bams/CAM016048.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016525.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016553.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016554.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016555.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016556.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016558.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016561.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016563.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016565.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016702.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016703.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016704.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016705.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016706.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016707.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016709.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016710.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016712.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016713.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016872.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016873.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016875.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016876.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016877.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016881.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016882.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016883.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017395.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017396.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017397.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017399.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017413.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017414.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017415.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017416.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Sorting of samples barcodes bed files from Herato0204
+Computing of jaccard index matrix for chromsome Herato0204 of samples of window size 10000
+
+Starting 15 worker threads
+121 windows queued | 15 windows analysed | 15 windows written
+
+Closing worker threads
+160 windows queued | 58 windows analysed | 58 windows written
+160 windows queued | 119 windows analysed | 119 windows written
+
+Done
+My program took 31.898125886917114 to run
+Editing of jacard index matrix for chromsome Herato0204 of samples of window size 10000
+Detecting outliers
+Error in nls(fo, points, start = list(a = 1, b = 1, c = 1)) : 
+  singular gradient
+Execution halted
+/home/af658/rds/rds-cj107-jiggins-rds/projects/af658/bin/wrath: line 267: Detecting outliers from matrix wrath_out/matrices/jaccard_matrix_10000_Herato0204_1_1591071_samples.txt step failed: No such file or directory
+running wrath_out with options:
+
+genome = /home/af658/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa
+chromosome = Herato0204
+window size = 10000
+sample bams file = samples.txt
+threads = 15
+
+
+Getting Herato0204 size from genome file
+Start and end positions to subset windows are not given
+Making 10000 windows of Herato0204 from 1 to 1591071
+Getting bams/CAM016046.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016047.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+[E::hts_open_format] Failed to open file bams/CAM016047.lativitta.Herato0204.rmd.bam
+samtools view: failed to open "bams/CAM016047.lativitta.Herato0204.rmd.bam" for reading: No such file or directory
+Getting bams/CAM016048.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016525.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016553.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016554.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016555.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016556.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016558.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016561.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016563.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016565.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016702.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016703.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016704.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016705.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016706.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016707.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016709.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016710.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016712.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016713.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016872.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+running wrath_out with options:
+
+genome = /home/af658/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa
+chromosome = Herato0204
+window size = 10000
+sample bams file = samples.txt
+threads = 15
+
+
+Getting Herato0204 size from genome file
+Start and end positions to subset windows are not given
+Making 10000 windows of Herato0204 from 1 to 1591071
+Getting bams/CAM016046.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016047.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+[E::hts_open_format] Failed to open file bams/CAM016047.lativitta.Herato0204.rmd.bam
+samtools view: failed to open "bams/CAM016047.lativitta.Herato0204.rmd.bam" for reading: No such file or directory
+Getting bams/CAM016048.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016525.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016553.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016554.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016555.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016556.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016558.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016561.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016563.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016565.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016702.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016703.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016704.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016705.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016706.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016707.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016709.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016710.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016712.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016713.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016872.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016873.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016875.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016876.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016877.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016881.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016882.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM016883.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017395.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017396.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017397.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017399.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017413.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017414.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017415.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Getting bams/CAM017416.lativitta.Herato0204.rmd.bam barcodes from Herato0204
+Sorting of samples barcodes bed files from Herato0204
+Computing of jaccard index matrix for chromsome Herato0204 of samples of window size 10000
+
+Starting 15 worker threads
+127 windows queued | 16 windows analysed | 16 windows written
+
+Closing worker threads
+160 windows queued | 57 windows analysed | 51 windows written
+160 windows queued | 112 windows analysed | 106 windows written
+
+Done
+My program took 32.44157648086548 to run
+Editing of jacard index matrix for chromsome Herato0204 of samples of window size 10000
+Detecting outliers
