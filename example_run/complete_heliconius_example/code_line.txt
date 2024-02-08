@@ -1,1 +1,1 @@
-nohup nice wrath -g ~/genomes/Hera/Heliconius_erato_demophoon_v1_-_scaffolds.fa -c Herato0204 -w 10000 -a samples.txt -t 15 -l 
+nohup nice wrath -g Heliconius_erato_demophoon_v1_-_scaffolds.fa -c Herato0204 -w 10000 -a samples.txt -t 15 -l 

@@ -5,7 +5,7 @@
 
 ---
 
-*Wrath* is a program for the visualisation and identification of candidate structural variants (SVs) from linked read data. Wrath calculates barcode sharing between windows of a given chromosome and produces heatmap plots that are useful to explore the data and identify candidate SBs. The pipeline can also automatically detect large SVs by using a double approach of z-scores threasholds and prediction bands from modelling of the data.
+*Wrath* is a program for the visualisation and identification of candidate structural variants (SVs) from linked read data. Wrath calculates barcode sharing between windows of a given chromosome and produces heatmap plots that are useful to explore the data and identify candidate SVs. The pipeline can also automatically detect large SVs by using a double approach of z-scores threasholds and prediction bands from modelling of the data.
 
 <!-- omit in toc -->
 ## On this page
