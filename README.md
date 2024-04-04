@@ -197,10 +197,8 @@ The easiest way to run *Wrath* on multiple chromosomes is to run in parallely. I
 
 ## Citing *Wrath*
 
-If you use *Wrath* please cite the our preprint on bioRxiv:
+If you use *Wrath* please cite the our MBE paper:
 
-Transposable element insertions are associated with Batesian mimicry in the pantropical butterfly Hypolimnas misippus
-Anna Orteu, Marek Kucka, Eunice Katili, Charo Ngumbao, Ian J. Gordon, Ivy Ng’iru, Eva van der Heijden, Gerard Talavera, Ian A. Warren, Steve Collins, Richard H. ffrench-Constant, Dino J. Martins, Yingguang Frank Chan, Chris D. Jiggins, Simon H. Martin
-bioRxiv 2023.07.10.548380; doi: https://doi.org/10.1101/2023.07.10.548380
+Anna Orteu, Marek Kucka, Ian J Gordon, Ivy Ng’iru, Eva S M van der Heijden, Gerard Talavera, Ian A Warren, Steve Collins, Richard H ffrench-Constant, Dino J Martins, Yingguang Frank Chan, Chris D Jiggins, Simon H Martin, Transposable Element Insertions Are Associated with Batesian Mimicry in the Pantropical Butterfly Hypolimnas misippus, Molecular Biology and Evolution, Volume 41, Issue 3, March 2024, msae041, https://doi.org/10.1093/molbev/msae041
 
 [def]: #wrath-wrapped-analysis-of-tagged-haplotypes-unlisted-unnumbered
