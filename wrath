@@ -285,7 +285,8 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -
   -p wrath_out/plots/heatmap_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).png \
   -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
   -f ${winSize} \
-  -c ${chromosome} ||
+  -c ${chromosome}  \
+  -a ${start} ||
   { >&2 "Detecting SVs and plotting of matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
@@ -305,7 +306,8 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ ! -z ${noplot+x} ] && [ !
   -o wrath_out/outliers/outliers_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).csv \
   -s wrath_out/SVs/sv_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
   -f ${winSize} \
-  -c ${chromosome} ||
+  -c ${chromosome} \
+  -a ${start} ||
   { >&2 "Detecting SVs in matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt step failed"; exit 1; }
 
 fi
