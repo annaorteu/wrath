@@ -6,6 +6,7 @@
 #        window_size = size of genomic windows
 #        chromosome = chromosome name
 #        window_file = file with genomic window positions
+#        start = start position for region within chromosome
 # Output: output_file = list of SVs with start and end positions and length in genomic windows
 #         plot_file = heatmap plot
 # Modules required: argparse, pandas, numpy, matplotlib, seaborn, sklearn
@@ -34,6 +35,7 @@ parser.add_argument("-s", "--outFile", help="Output SVs", action = "store")
 parser.add_argument("-f", "--winSize", help="Window size", type=int, action = "store", default = 1)
 parser.add_argument("-c", "--chromosome", help="Chromosome name", type=str, action = "store")
 parser.add_argument("-w", "--windowFile", help="Input genomic windows file", action = "store")
+parser.add_argument("-a", "--start", help="Start position to subset windows within chromosome", type=int, action = "store")
 
 args = parser.parse_args()
 
@@ -49,6 +51,7 @@ outplot = args.plot
 output = args.outFile
 window_size = args.winSize
 chrom = args.chromosome
+start = args.start
 
 
 #########################################################################################################################
@@ -121,6 +124,7 @@ fig.savefig(outplot)
 breakPoints['length']=breakPoints['maxcol']-breakPoints['minrow']
 breakPoints.sort_values(by=['length'], ascending=False, inplace=True)
 
-output_table={'SV_id':breakPoints.index.values, 'chromosome':chrom, 'start':breakPoints['minrow']*window_size, 'end':breakPoints['maxcol']*window_size, 'length':breakPoints['length']*window_size}
+# create SV detection table and add chromosome start (-a) positions to obtain chromosome position (bp)
+output_table={'SV_id':breakPoints.index.values, 'chromosome':chrom, 'start':breakPoints['minrow']*window_size+start, 'end':breakPoints['maxcol']*window_size+start, 'length':breakPoints['length']*window_size}
 output_df=pd.DataFrame(output_table)
 output_df.to_csv(output,index=False)
