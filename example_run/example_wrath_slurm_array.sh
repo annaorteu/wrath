@@ -17,13 +17,16 @@ module load python-3.6.1-gcc-5.4.0-23fr5u4 #for slurm
 module load R/4.0.3 
 source ~/.bashrc
 
+# create file with chr list
+cut -f1 ~/genomes/Hmel/Hmel2.5.fa.fai > Hera_chr
+
 #set variables
 chr=$(sed -n "$SLURM_ARRAY_TASK_ID"p Hera_chr)
 winSize=50000
 threads=10
-start=700000
-end=850000
+#start=700000
+#end=850000
 group=malleti.txt
 
 #run wrath
-wrath -g ~/genomes/Hmel/Hmel2.5.fa -c ${chr}  -w ${winSize}  -a ${group} -t ${threads} -l -s ${start} -e ${end} 
+wrath -g ~/genomes/Hmel/Hmel2.5.fa -c ${chr}  -w ${winSize}  -a ${group} -t ${threads} -l  
