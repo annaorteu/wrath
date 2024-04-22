@@ -246,7 +246,7 @@ if [ -z ${step+x} ] || [ -z ${plot+x} ] || [ -z ${autodetect+x} ] || [ ! -z ${no
 
   #plot the optput
   mkdir -p wrath_out/plots
-  echo "Plotting heatmap without automatic SV detection for matrix matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt"
+  echo "Plotting heatmap without automatic SV detection for matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt"
   python ${DIR}/sv_detection/plot_heatmap.py \
   --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
   -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed \
@@ -279,7 +279,7 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ -z ${noplot+x} ] && [ ! -
   #plot the optput
   mkdir -p wrath_out/plots
   mkdir -p wrath_out/SVs
-  echo "Detecting SV and plotting heatmap for matrix matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt"
+  echo "Detecting SV and plotting heatmap for matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt"
   python ${DIR}/sv_detection/sv_detection_and_heatmap.py \
   --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
   -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed \
@@ -301,7 +301,7 @@ if [ -z ${step+x} ] || [ ! -z ${outliersStep+x} ] && [ ! -z ${noplot+x} ] && [ !
 
   #plot the optput
   mkdir -p wrath_out/SVs
-  echo "Detecting SV without plotting heatmap for matrix matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt"
+  echo "Detecting SV without plotting heatmap for matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt"
   python ${DIR}/sv_detection/sv_detection.py \
   --matrix wrath_out/matrices/jaccard_matrix_${winSize}_${chromosome}_${start}_${end}_$(basename "$group" .txt).txt \
   -w wrath_out/beds/windows_${winSize}_${chromosome}_${start}_${end}.bed \
