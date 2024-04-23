@@ -158,7 +158,7 @@ If automatic detection of SVs is not enabled, the upper triangle will show barco
 
 #### Comparison of populations:
 
-If comparing two populations that differ in a structural variant, it can be useful to plot the barcode sharing between windows of the two populations. This can be done by using the script [sv_detection/plot_2matrices_tegether.py](sv_detection/plot_2matrices_together.py) and providing a list of bam files for each population. The plot will show the barcode sharing between windows of each population, one in the upper triangle and the other in the lower triangle.
+If comparing two populations that differ in a structural variant, it can be useful to plot the barcode sharing between windows of the two populations. This can be done by using the script [sv_detection/plot_2matrices_tegether.py](sv_detection/plot_2matrices_together.py) and providing a list of bam files for each population. The plot will show the barcode sharing between windows of each population, population 1 (-m1) in the lower triangle and population 2 (-m2) in the upper triangle.
 
 ![two_populations](example_run/two_populations.png)
 
