@@ -153,9 +153,9 @@ if [ -z ${step+x} ] || [ ! -z ${makewindows+x} ]; then
   fi
 
   #then make windows
-  echo "Getting ${chromosome} size from genome file"
+  echo "Getting chromosome ${chromosome} size from genome file"
   awk -v pat="${chromosome}" '$1 == pat {print $0}' wrath_out/size.genome > wrath_out/size.${chromosome} || 
-  { >&2 echo "Getting ${chromosome} size from genome file failed" ; exit 1; }
+  { >&2 echo "Getting chromosome ${chromosome} size from genome file failed" ; exit 1; }
 
   #check if start and end positions are given
   if [ ! -z ${start+x} ] && [ ! -z ${end+x} ]; then
@@ -193,24 +193,59 @@ if [ -z ${step+x} ] || [ ! -z ${getbarcodes+x} ]; then
   #get barcodes by phenotype
   for sample in $(cat ${group})
     do
-    echo "Getting ${sample} barcodes from ${chromosome}"
+    echo "Getting ${sample} barcodes from chromosome ${chromosome}"
     samtools view -q 20 -@ ${threads} ${sample} ${chromosome}:${start}-${end} |
     grep -o -P "${chromosome}.*BX:Z:[^\t\n]*" |
     awk '{print $1"\t"$2"\t"$2"\t"$NF}' > wrath_out/beds/barcodes_${chromosome}_${start}_${end}_$(basename "$group" .txt)_$(basename $sample .bam).bed
-  done || { >&2 echo "Getting ${sample} barcodes from ${chromosome} failed" ; exit 1; }
+  done || { >&2 echo "Getting ${sample} barcodes from chromosome ${chromosome} failed" ; exit 1; }
 
   #sort barcodes
-  echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome}"
+  echo "Sorting of $(basename "$group" .txt) barcodes bed files from chromosome ${chromosome}"
   cat wrath_out/beds/barcodes_${chromosome}_${start}_${end}_$(basename "$group" .txt)_*bed | 
   bedtools sort -i - | 
   bgzip -@ ${threads} > wrath_out/beds/barcodes_${chromosome}_${start}_${end}_sorted_$(basename "$group" .txt).bed.gz && 
   tabix wrath_out/beds/barcodes_${chromosome}_${start}_${end}_sorted_$(basename "$group" .txt).bed.gz && 
   rm wrath_out/beds/barcodes_${chromosome}_${start}_${end}_$(basename "$group" .txt)_*bed || 
-  { >&2 echo "Sorting of $(basename "$group" .txt) barcodes bed files from ${chromosome} failed" ; exit 1; }
+  { >&2 echo "Sorting of $(basename "$group" .txt) barcodes bed files from chromosome ${chromosome} failed" ; exit 1; }
 
   matrix==1
 
 fi
+
+
+######################################################################
+# Define start end positions 
+# this allows for -x step functionality, so that start ends are not dependent on the "make genomic windows" step
+# run after genomic windows, so that the bed file step still runs according to whether regions were inputted by user or not
+# this will create new, permanent start end variables for the rest of the steps
+
+#check if the file with genome sizes already exists
+  if [ ! -f wrath_out/size.genome ]; then
+    # first get chromosome sizes from the reference
+    echo "Getting chromosome sizes"
+    samtools faidx ${genome} || { >&2 echo 'Reference genome indexing failed failed' ; exit 1; }
+    cut -f1,2 ${genome}.fai > wrath_out/size.genome || { >&2 echo 'Getting chromosome sizes from genome file failed' ; exit 1; }
+fi
+
+#then get individual chromosome size
+echo "Getting chromosome ${chromosome} size from genome file"
+awk -v pat="${chromosome}" '$1 == pat {print $0}' wrath_out/size.genome > wrath_out/size.${chromosome} || 
+{ >&2 echo "Getting chromosome ${chromosome} size from genome file failed" ; exit 1; }
+  
+#check if start and end positions are given
+if [ ! -z ${start+x} ] && [ ! -z ${end+x} ]; then
+  echo "Start and end positions are given by user or have been obtained already by the step: Make genomic windows"
+  echo "Start: ${start}"
+  echo "End: ${end}"
+else
+  echo "Start and end positions to subset windows are not given, so will obtain from start until end of chromosome"
+  start=1
+  end=$(cat wrath_out/size.${chromosome} | awk '{print $2}')
+  echo "Start: ${start}"
+  echo "End: ${end}"
+fi
+
+rm wrath_out/size.${chromosome}
 
 
 ######################################################################
