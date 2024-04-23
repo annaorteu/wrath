@@ -116,6 +116,9 @@ chromosome = ${chromosome}
 window size = ${winSize}
 sample bams file = ${group}
 threads = ${threads}
+start from step (optional) = ${step}
+start from chromosomal position in bp (optional) = ${start}
+end in chromosomal position in bp (optional) = ${end}
 
 "
 ######################################################################
